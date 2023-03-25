@@ -38,13 +38,13 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <div class="form-outline">
-                                        <input type="text" id="form3Example1" class="form-control" />
+                                        <input type="text" id="fname" class="form-control" />
                                         <label class="form-label" for="form3Example1">First name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <div class="form-outline">
-                                        <input type="text" id="form3Example2" class="form-control" />
+                                        <input type="text" id="lname" class="form-control" />
                                         <label class="form-label" for="form3Example2">Last name</label>
                                     </div>
                                 </div>
@@ -54,19 +54,19 @@
                             <div class="row">
                                 <div class="col-md-4 mb-4">
                                     <div class="form-outline">
-                                        <input type="email" id="form3Example1" class="form-control" />
+                                        <input type="email" id="email" class="form-control" />
                                         <label class="form-label" for="form3Example1">Email</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-4">
                                     <div class="form-outline">
-                                        <input type="text" id="form3Example2" class="form-control" />
+                                        <input type="text" id="phone" class="form-control" />
                                         <label class="form-label" for="form3Example2">Phone number</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-4">
                                     <div class="form-outline">
-                                        <input type="text" id="form3Example2" class="form-control" />
+                                        <input type="text" id="line_id" class="form-control" />
                                         <label class="form-label" for="form3Example2">Line ID</label>
                                     </div>
                                 </div>
@@ -74,18 +74,18 @@
 
                             <!-- Username input -->
                             <div class="form-outline mb-4">
-                                <input type="username" id="form3Example4" class="form-control" />
+                                <input type="username" id="username" class="form-control" />
                                 <label class="form-label" for="form3Example4">Username</label>
                             </div>
 
                             <!-- Password input -->
                             <div class="form-outline mb-4">
-                                <input type="password" id="form3Example4" class="form-control" />
+                                <input type="password" id="password" class="form-control" />
                                 <label class="form-label" for="form3Example4">Password</label>
                             </div>
 
                             <!-- Submit button -->
-                            <button type="submit" class="btn btn-primary btn-block mb-4">
+                            <button onclick="register()" class="btn btn-primary btn-block mb-4">
                                 Sign up
                             </button>
                         </form>
@@ -98,3 +98,48 @@
 </body>
 
 </html>
+<script src="./js/seturl.js"></script>
+<script>
+    async function register() {
+        event.preventDefault()
+        let fname1 = fname.value
+        let lname1 = lname.value
+        let email1 = email.value
+        let phone1 = phone.value
+        let line_id1 = line_id.value
+        let username1 = username.value
+        let password1 = password.value
+        if (fname && lname && email && phone && line_id && username && password) {
+            const config_fetch_api = {
+                headers: {
+                    "Accept": "*/*",
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    fname: fname1,
+                    lname: lname1,
+                    email: email1,
+                    phone_number: phone1,
+                    line_id: line_id1,
+                    username: username1,
+                    password: password1
+                })
+            }
+            try {
+                let response = await fetch(url_endpoint+'/api/login/register', config_fetch_api)
+                let result = await response.json()
+        
+                console.log(result)
+            }catch(error){
+                alert('err')
+            }
+           
+        } else {
+            alert('ข้อมูลไม่ถูกต้อง')
+        }
+
+
+    }
+
+</script>

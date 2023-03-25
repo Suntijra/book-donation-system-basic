@@ -7,7 +7,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const session = require('express-session');
 // import router 
-var usersRouter = require('./routes/usersRoute');
+// var usersRouter = require('./routes/usersRoute');
 let loginSystem = require('./routes/loginRoute')
 // let adminRouter = require('./routes/adminRoute')
 
@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //routes
 // app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/login-system', loginSystem)
+// app.use('/api/users', usersRouter);
+app.use('/api/login', loginSystem)
 // app.use('/admin', adminRouter)
 module.exports = app;
