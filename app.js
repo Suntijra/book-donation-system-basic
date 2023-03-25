@@ -6,10 +6,10 @@ var app = express();
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const session = require('express-session');
-// import router 
-// var usersRouter = require('./routes/usersRoute');
+// import router ;
 let loginSystem = require('./routes/loginRoute')
-// let adminRouter = require('./routes/adminRoute')
+//import middleware
+let auth = require('./middleware')
 
 //middleware
 app.use(cors())

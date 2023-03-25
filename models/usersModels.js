@@ -19,7 +19,7 @@ module.exports = {
     return [rows,fields];
   },
   checkUserInSystemByUserAndPwd: async (user, pwd) => {
-    const [rows,fields] = await db.execute(`SELECT * FROM user where username = ? and password = ?`, [user, pwd]);
+    const [rows,fields] = await db.execute(`SELECT id,fname,lname,email,phoneno,lineID,level FROM user where username = ? and password = ?`, [user, pwd]);
     return [rows,fields]
   },
   insertUser: async (user, pwd, fname, lname, email, phone, line_id) => {

@@ -94,29 +94,29 @@
 </body>
 
 </html>
-
+<script src="./js/seturl.js"></script>
 <script>
-    fetch('http://localhost:3000/users/login', {
-        method: 'POST',
-        credentials: 'same-origin'
-    })
-        .then(response => {
-            if (response.ok) {
-                return fetch('/api/user', {
-                    credentials: 'same-origin'
-                });
-            } else {
-                throw new Error('Failed to log in');
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error('Failed to get user information');
-            }
-        })
-        .then(data => console.log(data))
-        .catch(error => console.error(error));
+    // fetch('http://localhost:3000/users/login', {
+    //     method: 'POST',
+    //     credentials: 'same-origin'
+    // })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             return fetch('/api/user', {
+    //                 credentials: 'same-origin'
+    //             });
+    //         } else {
+    //             throw new Error('Failed to log in');
+    //         }
+    //     })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             return response.text();
+    //         } else {
+    //             throw new Error('Failed to get user information');
+    //         }
+    //     })
+    //     .then(data => console.log(data))
+    //     .catch(error => console.error(error));
 
 </script>
