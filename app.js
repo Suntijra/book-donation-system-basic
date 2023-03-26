@@ -9,7 +9,7 @@ const session = require('express-session');
 // import router ;
 let loginSystem = require('./routes/loginRoute')
 //import middleware
-let auth = require('./middleware')
+let auth = require('./middleware/auth')
 
 //middleware
 app.use(cors())
