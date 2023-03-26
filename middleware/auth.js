@@ -3,18 +3,11 @@ const jwt = require('jsonwebtoken');
 function auth(req, res, next) {
     const token = req.body.token
     try {
-        if (!token) {
-            // Check if this is a login request
-            if (
-                req.path === '/api/login/register'
-                && req.path === '/api/login'
-            ) {
-                next()
-            } else {
-                jwt_decoded(token)
-            }
-        } else {
+        if(!token){
+            res.redirect('/login.html')
+        }else{
             jwt_decoded(token)
+            next()
         }
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });

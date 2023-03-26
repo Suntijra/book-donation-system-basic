@@ -17,11 +17,12 @@ module.exports = {
             const username = req.body.username
             const password = req.body.password
             const [rows, fields] = await userModel.checkUserInSystemByUserAndPwd(username, MD5(password))
+            let token = '';
             let user = rows[0]
             console.log('check login')
             if (user) {
                 token = jwt_generate_token(user)
-                console.log('token : ', token)
+                // console.log('token : ', token)
                 res.status(200).json({message : 'success' , token : token });
             } else {
                 res.status(200).json({ message: 'no user in system' });

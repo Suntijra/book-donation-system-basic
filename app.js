@@ -5,23 +5,24 @@ var logger = require('morgan');
 var app = express();
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const session = require('express-session');
+// const session = require('express-session');
 // import router ;
 let loginSystem = require('./routes/loginRoute')
 //import middleware
-let auth = require('./middleware/auth')
+// let auth = require('./middleware/auth')
 
 //middleware
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())// parse application/json
 app.set('trust proxy', 1) // trust first proxy
-app.use(session({
-  secret: 'mysecretkey',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false, maxAge: 60 * 60 * 1000 }
-}));
+
+// app.use(session({
+//   secret: 'mysecretkey',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { secure: false, maxAge: 60 * 60 * 1000 }
+// }));
 
 
 app.use(logger('dev'));
@@ -31,8 +32,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //routes
-// app.use('/', indexRouter);
-// app.use('/api/users', usersRouter);
 app.use('/api/login', loginSystem)
-// app.use('/admin', adminRouter)
+
 module.exports = app;
