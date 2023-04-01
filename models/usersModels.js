@@ -5,7 +5,6 @@ const db = mysql.createConnection(dbConfig).promise();
 
 // ensure the connection is established successfully
 db.connect((err) => {
-  2
   if (err) {
     console.error('Error connecting to MySQL database:', err);
   } else {

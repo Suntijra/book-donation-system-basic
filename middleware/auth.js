@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
+secret_key = 'book'
 
 function auth(req, res, next) {
     const token = req.body.token
     try {
         if(!token){
-            res.redirect('/login.html')
+            res.status(500).json({ message: 'no token' });
         }else{
             jwt_decoded(token)
             next()

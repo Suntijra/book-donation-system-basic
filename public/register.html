@@ -109,7 +109,7 @@
         let line_id1 = line_id.value
         let username1 = username.value
         let password1 = password.value
-        if (fname && lname && email && phone && line_id && username && password) {
+        if (fname1 && lname1 && email1 && phone1 && line_id1 && username1.length >= 6 && password1.length >= 6) {
             const config_fetch_api = {
                 headers: {
                     "Accept": "*/*",
@@ -141,7 +141,7 @@
             }
            
         } else {
-            alert('ข้อมูลไม่ถูกต้อง')
+            alert('ข้อมูลไม่ถูกต้อง หรือ รหัสผ่านต้องมากกว่า 6 ตัว หรอเท่ากับ')
         }
 
 

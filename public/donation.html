@@ -14,7 +14,9 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet"> 
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -33,7 +35,8 @@
 
 <body>
     <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-grow text-primary" role="status"></div>
     </div>
     <!-- Spinner End -->
@@ -45,7 +48,8 @@
             <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
                 <h1 class="fw-bold text-primary m-0">Book<span class="text-white">Donation</span></h1>
             </a>
-            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -87,65 +91,69 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                    <h4 class="display-6 mb-5">บริจาคหนังสือ</h4>
+                    <h4 class="display-6 mb-5">นัดวัดบริจาคหนังสือบริจาคหนังสือ</h4>
                     <form>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                    <label for="name">ชื่อ</label>
+                                    <input type="text" class="form-control" id="email" placeholder="Your Name">
+                                    <label for="email">email</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="lname" placeholder="Your Lastname">
-                                    <label for="lname">นามสกุล</label>
+                                    <input type="text" class="form-control" id="tel" placeholder="Your Lastname">
+                                    <label for="tel">Tel</label>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="address" placeholder="address">
                                     <label for="address">Address</label>
                                 </div>
-                            </div>
-                            
-                            <b><p class="mb-0">ประเภท</p></b>
+                            </div> -->
+
+                            <b>
+                                <p class="mb-0">ประเภท</p>
+                            </b>
                             <div class="col-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="book">
+                                    <!-- <input class="form-check-input" type="" value="" id="book"> -->
                                     <label class="form-check-label" for="flexCheckDefault">หนังสือ</label>
                                 </div>
                             </div>
                             <div class="col-2 text-end">
-                                <p>จำนวน</p>                                
+                                <p>จำนวน</p>
                             </div>
                             <div class="col-2">
                                 <div class="form">
-                                    <input type="text" class="form-control bg-light border-0" id="amount_b" placeholder="">
+                                    <input type="number" class="form-control bg-light border-0" id="amount_b" value="0"
+                                        placeholder="">
                                 </div>
                             </div>
                             <div class="col-4">
-                                <p>เล่ม</p>                                
+                                <p>เล่ม</p>
                             </div>
                             <div class="col-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="paper">
+                                    <!-- <input class="form-check-input" type="checkbox" value="" id="paper"> -->
                                     <label class="form-check-label" for="flexCheckChecked">วารสาร</label>
                                 </div>
                             </div>
                             <div class="col-2 text-end">
-                                <p>จำนวน</p>                                
+                                <p>จำนวน</p>
                             </div>
                             <div class="col-2">
                                 <div class="form">
-                                    <input type="text" class="form-control bg-light border-0" id="amount_p" placeholder="">
+                                    <input type="number" class="form-control bg-light border-0" id="amount_p" value="0"
+                                        placeholder="">
                                 </div>
                             </div>
                             <div class="col-4">
-                                <p>เล่ม</p>                                
+                                <p>เล่ม</p>
                             </div>
 
-                            <div> 
+                            <div>
                                 <form action="/action_page.php">
                                     <label for="datetime">วันที่จะเข้ามารับหนังสือ</label>&nbsp;&nbsp;&nbsp;
                                     <input type="date" id="date" name="date">
@@ -153,7 +161,8 @@
                             </div>
 
                             <div class="col-12">
-                                <button class="btn btn-primary py-2 px-3 me-3" id="donation_btn">
+                                <button class="btn btn-primary py-2 px-3 me-3" onclick="go_donation()"
+                                    id="donation_btn">
                                     Send
                                     <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
                                         <i class="fa fa-arrow-right"></i>
@@ -167,9 +176,9 @@
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 450px;">
                     <div class="position-relative rounded overflow-hidden h-100">
                         <iframe class="position-relative w-100 h-100"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3871.9050689389633!2d100.58450015089707!3d13.964255896047746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2816f1377fc17%3A0x63d330b7f8af6e16!2z4Lih4Lir4Liy4Lin4Li04LiX4Lii4Liy4Lil4Lix4Lii4Lij4Lix4LiH4Liq4Li04LiV!5e0!3m2!1sth!2sth!4v1668146885770!5m2!1sth!2sth"
-                        frameborder="0" style="min-height: 450px; border:0;" allowfullscreen="" aria-hidden="false"
-                        tabindex="0"></iframe>
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3871.9050689389633!2d100.58450015089707!3d13.964255896047746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2816f1377fc17%3A0x63d330b7f8af6e16!2z4Lih4Lir4Liy4Lin4Li04LiX4Lii4Liy4Lil4Lix4Lii4Lij4Lix4LiH4Liq4Li04LiV!5e0!3m2!1sth!2sth!4v1668146885770!5m2!1sth!2sth"
+                            frameborder="0" style="min-height: 450px; border:0;" allowfullscreen="" aria-hidden="false"
+                            tabindex="0"></iframe>
                     </div>
                 </div>
             </div>
@@ -213,3 +222,75 @@
 </body>
 
 </html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    async function go_donation() {
+        event.preventDefault()
+        let book_count = parseInt(amount_b.value) + parseInt(amount_p.value)
+        let phone_no = tel.value
+        if (isValidEmail(email.value)
+            && phone_no.length === 10
+            && book_count > 0
+            && date.value) {
+            let headersList = {
+                "Accept": "*/*",
+                "Content-Type": "application/json"
+            }
+
+            let bodyContent = JSON.stringify({
+                "token": localStorage.getItem('token'),
+                "email": email.value,
+                "date": date.value,
+                "j_num": parseInt(amount_b.value),
+                "b_num": parseInt(amount_p.value),
+                "phone": phone_no
+            });
+
+            let response = await fetch(localStorage.getItem("url_endpoint") + "/api/book/send", {
+                method: "POST",
+                body: bodyContent,
+                headers: headersList
+            });
+
+            let data = await response.json();
+            console.log(data);
+            let msg = data.message
+            if (msg === "success") {
+                Swal.fire(
+                    'Good job!',
+                    'ส่งข้อมูลไปแล้ว',
+                    'success'
+                )
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'มีบางอย่างไม่ถูกต้อง',
+                    footer: ''
+                })
+            }
+            // clear value 
+            email.value = ''
+            amount_b.value = 0
+            amount_p.value = 0
+            phone_no.value = ''
+            date.value = ''
+            tel.value = ''
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'มีบางอย่างไม่ถูกต้อง',
+                footer: ''
+            })
+        }
+    }
+    function isValidEmail(email) {
+        // Regular expression pattern to match email format
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Test if the provided email matches the pattern
+        return emailPattern.test(email);
+    }
+
+</script>

@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 // const session = require('express-session');
 // import router ;
 let loginSystem = require('./routes/loginRoute')
+let bookRoute = require('./routes/bookRoute')
 //import middleware
 // let auth = require('./middleware/auth')
 
@@ -33,5 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //routes
 app.use('/api/login', loginSystem)
+app.use('/api/book', bookRoute)
+
 
 module.exports = app;
