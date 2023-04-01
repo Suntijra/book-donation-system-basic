@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 // import router ;
 let loginSystem = require('./routes/loginRoute')
 let bookRoute = require('./routes/bookRoute')
+let adminRoute = require('./routes/adminRoute')
 //import middleware
 // let auth = require('./middleware/auth')
 
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //routes
 app.use('/api/login', loginSystem)
 app.use('/api/book', bookRoute)
+app.use('/api/admin',adminRoute)
 
 
 module.exports = app;

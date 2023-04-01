@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin</title>
+    <style>
+        .card {
+
+            height: 300px;
+            width: 500px;
+            border-radius: 10px;
+            box-shadow: 10px 9px 38px -7px rgba(0, 0, 0, 0.76);
+            -webkit-box-shadow: 10px 9px 38px -7px rgba(0, 0, 0, 0.76);
+            -moz-box-shadow: 10px 9px 38px -7px rgba(0, 0, 0, 0.76);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: wheat;
+        }
+    </style>
+</head>
+
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh;background-color: coral;">
+    <div class="card">
+        <div style="display: flex; justify-content: center;padding: 10px;">
+            <span>ADMIN ONLY</span>
+        </div>
+        <div style="padding: 10px; margin: 10px; display: flex; flex-direction: column;width:50%;">
+            <label for="username">USERNAME </label>
+            <input type="text" name="username">
+            <br>
+            <label for="password">Password</label>
+            <input type="text" name="password">
+        </div>
+        <button>Login</button>
+    </div>
+</body>
+
+</html>
