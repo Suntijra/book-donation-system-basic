@@ -21,23 +21,123 @@
             align-items: center;
             background-color: wheat;
         }
+
+        /* loading */
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+        }
+
+        .loading-animation {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 5px solid #ccc;
+            border-top-color: #333;
+            animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
 <body style="display: flex; justify-content: center; align-items: center; height: 100vh;background-color: coral;">
+    <!-- loading -->
+    <div class="loading-container">
+        <div class="loading-animation"></div>
+    </div>
+    <!-- card -->
     <div class="card">
         <div style="display: flex; justify-content: center;padding: 10px;">
             <span>ADMIN ONLY</span>
         </div>
         <div style="padding: 10px; margin: 10px; display: flex; flex-direction: column;width:50%;">
             <label for="username">USERNAME </label>
-            <input type="text" name="username">
+            <input id="user" type="text" name="username">
             <br>
-            <label for="password">Password</label>
-            <input type="text" name="password">
+            <label for="password">PASSWORD</label>
+            <input id="pwd" type="text" name="password">
         </div>
-        <button>Login</button>
+        <button onclick="go_dashboard()">Login</button>
     </div>
 </body>
 
 </html>
+<script src="./js/seturl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    loading(false)
+    function loading(status) {
+        let loader = document.querySelector('.loading-container')
+        !status ? loader.style.display = 'none' : loader.style.display = "flex"
+    }
+    async function go_dashboard() {
+        try {
+            let headersList = {
+                "Accept": "*/*",
+                "Content-Type": "application/json"
+            }
+
+            let bodyContent = JSON.stringify({
+                "user": user.value,
+                "pwd": pwd.value
+            });
+
+            if (user.value && pwd.value) {
+                loading(true)
+                let response = await fetch(localStorage.getItem('url_endpoint') + "/api/admin", {
+                    method: "POST",
+                    body: bodyContent,
+                    headers: headersList
+                });
+                let data = await response.json();
+                let msg = data.message
+                let token = data.token
+                if (msg === "success") {
+                    localStorage.setItem("token",token)
+                    localStorage.setItem("role","admin")
+                    window.location.href = "./dashbord.html"
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'username & password มีบางอย่างไม่ถูกต้อง',
+                        footer: ''
+                    })
+                }
+                loading(false)
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'username & password มีบางอย่างไม่ถูกต้อง',
+                    footer: ''
+                })
+            }
+
+
+        } catch (error) {
+            console.log(error)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'บางอย่างผิดพลาด หรือ server อาจมีปัญหา',
+                footer: ''
+            })
+        }
+
+
+    }
+</script>
