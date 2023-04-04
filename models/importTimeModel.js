@@ -22,7 +22,21 @@ module.exports = {
     const [rows, fields] = await db.execute(
       `INSERT INTO import_time 
       (uid, email, appointment_date, journal_num, book_num,phone) 
-      VALUES (?, ?, ?, ?, ?, ?)`, [uid,email, appointment_date, journal_num, book_num, phone]);
+      VALUES (?, ?, ?, ?, ?, ?)`, [uid, email, appointment_date, journal_num, book_num, phone]);
+    return [rows, fields]
+  },
+  findAllandJoinImportTime: async () => {
+    const [rows, fields] = await db.execute(`SELECT it.id, user.fname ,user.lname , user.email 
+    ,user.phoneno,it.phone,it.status ,it.appointment_date,it.journal_num,it.book_num FROM user
+    INNER JOIN import_time AS it
+    ON it.uid = user.id;`);
+    return [rows, fields];
+  },
+  updateStatus: async (id) => {
+    const [rows, fields] = await db.execute(
+      `UPDATE import_time
+      SET status = "approved"
+      WHERE id = ?;`, [id]);
     return [rows, fields]
   }
 };

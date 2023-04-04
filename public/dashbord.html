@@ -96,9 +96,8 @@
                 </div>
                 <!-- /. ROW  -->
                 <hr />
-                <div style="width: 100%; overflow: scroll;">
-                    <div
-                        style="padding: 10px; display: flex; justify-content: center; overflow: scroll; width: max-content;">
+                <div style="width: 100%; display: flex; justify-content: center;">
+                    <div style="padding: 10px; overflow: scroll; height: 70vh;">
                         <table class="mytable">
                             <thead>
                                 <tr class="mytr">
@@ -112,7 +111,7 @@
                                     <th class="myth"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="waiting_approve">
                                 <tr class="mytr">
                                     <td class="mytd">brabra jajajaja</td>
                                     <td class="mytd">john.doe@example.com</td>
@@ -121,28 +120,12 @@
                                     <td class="mytd">10</td>
                                     <td class="mytd">2023-20-10</td>
                                     <td class="mytd">รอการนำส่งหนังสือ</td>
-                                    <td class="mytd"><button onclick="approve_status()">ยืนยันการรับหนังสือ</button></td>
+                                    <td class="mytd"><button onclick="approve_status()">ยืนยันการรับหนังสือ</button>
+                                    </td>
                                 </tr>
-                                <tr class="mytr">
-                                    <td class="mytd">brabra jajajaja</td>
-                                    <td class="mytd">john.doe@example.com</td>
-                                    <td class="mytd">0641076072</td>
-                                    <td class="mytd">10</td>
-                                    <td class="mytd">10</td>
-                                    <td class="mytd">2023-20-10</td>
-                                    <td class="mytd">รอการนำส่งหนังสือ</td>
-                                    <td class="mytd"><button>ยืนยันการรับหนังสือ</button></td>
-                                </tr>
-                                <tr class="mytr">
-                                    <td class="mytd">brabra jajajaja</td>
-                                    <td class="mytd">john.doe@example.com</td>
-                                    <td class="mytd">0641076072</td>
-                                    <td class="mytd">10</td>
-                                    <td class="mytd">10</td>
-                                    <td class="mytd">2023-20-10</td>
-                                    <td class="mytd">รอการนำส่งหนังสือ</td>
-                                    <td class="mytd"><button>ยืนยันการรับหนังสือ</button></td>
-                                </tr>
+
+
+
                             </tbody>
                         </table>
                     </div>
@@ -182,7 +165,104 @@
 </html>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function approve_status() {
+    render_all_book()
+    async function render_all_book() {
+        let headersList = {
+            "Accept": "*/*",
+            "User-Agent": "Thunder Client (https://www.thunderclient.com)"
+        }
+
+        let response = await fetch(localStorage.getItem("url_endpoint") + "/api/book/findall", {
+            method: "GET",
+            headers: headersList
+        });
+
+        let data = await response.json();
+        let html = ''
+        let msg = data.message
+        data = data.data
+        if (msg === "success") {
+            data.forEach(data => {
+                console.log(data)
+                let msg_status = data.status === "waiting" ? "รอการนำส่งหนังสือ" : "นำส่งสำเร็จ"
+                html += `<tr class="mytr">
+                                    <td class="mytd">${data.fname + "" + data.lname}</td>
+                                    <td class="mytd">${data.email}</td>
+                                    <td class="mytd">${data.phone}</td>
+                                    <td class="mytd">${data.journal_num}</td>
+                                    <td class="mytd">${data.book_num}</td>
+                                    <td class="mytd">${formatDate(data.appointment_date)}</td>
+                                    <td class="mytd">${msg_status}</td>
+                                    ${data.status === "waiting" ? `<td class="mytd" onclick="approve_status(${data.id})"><button>ยืนยันการรับหนังสือ</button></td>` : `<td class="mytd" st>${msg_status}</td>`
+                    }
+                                   
+                                </tr>`
+            });
+            waiting_approve.innerHTML = html
+        } else {
+            Swal.fire({
+                title: 'ไม่สามารถโหลดตารางได้',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            })
+        }
+    }
+    function formatDate(mil) {
+        const date = new Date(mil);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // add 1 to adjust for zero-based month indexing and pad with zeros
+        const day = date.getDate().toString().padStart(2, '0'); // pad with zeros
+
+        const formattedDate = `${year}-${month}-${day}`; // using string literals
+
+        // Alternatively, using the join() method:
+        // const formattedDate = [year, month, day].join('-');
+
+        console.log(formattedDate); // Output: "2023-04-04"
+        return formattedDate
+    }
+    async function update_status(id) {
+        try {
+            let headersList = {
+                "Accept": "*/*",
+                "Content-Type": "application/json"
+            }
+
+            let bodyContent = JSON.stringify({
+                "id": id
+            });
+
+            let response = await fetch(localStorage.getItem("url_endpoint") + "/api/book/update/id", {
+                method: "POST",
+                body: bodyContent,
+                headers: headersList
+            });
+
+            let data = await response.json();
+            if (data.message === "success") {
+                Swal.fire('อนุมัติหนังสือสำเร็จ')
+                render_all_book()
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }
+
+    }
+    function approve_status(id) {
         Swal.fire({
             title: 'ยืนยันการรับหนังสือ',
             text: "ตรวจสอบให้แน่ใจว่าได้หนังสือครบถ้วน ?",
@@ -193,11 +273,12 @@
             confirmButtonText: 'ยืนยันการรับหนังสือ'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
+                update_status(id)
+                // Swal.fire(
+                //     'Deleted!',
+                //     'Your file has been deleted.',
+                //     'success'
+                // )
             }
         })
     }
