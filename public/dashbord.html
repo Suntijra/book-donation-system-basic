@@ -60,7 +60,7 @@
                 </div>
 
                 <span class="logout-spn">
-                    <a href="#" style="color:#fff;">LOGOUT</a>
+                    <a onclick="logout()" style="color:#fff;">LOGOUT</a>
 
                 </span>
             </div>
@@ -69,18 +69,17 @@
         <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
-
-
                     <li>
                         <a>
                             <i class="fa fa-desktop ">
 
                             </i> Dashboard<span class="badge"></span></a>
                     </li>
-
-
                     <li>
-                        <a href="#"><i class="fa fa-table "></i>รายการรอนุมัติ</a>
+                        <a href="./dashbord.html"><i class="fa fa-table "></i>รายการรอนุมัติ</a>
+                    </li>
+                    <li>
+                        <a href="./dashbord_save.html"><i class="fa fa-table "></i>บันทึกข้อมูลหนังสือ</a>
                     </li>
                 </ul>
             </div>
@@ -273,13 +272,12 @@
             confirmButtonText: 'ยืนยันการรับหนังสือ'
         }).then((result) => {
             if (result.isConfirmed) {
-                update_status(id)
-                // Swal.fire(
-                //     'Deleted!',
-                //     'Your file has been deleted.',
-                //     'success'
-                // )
+                update_status(id) 
             }
         })
+    }
+    function logout() {
+        localStorage.setItem("token", '')
+        window.location.reload()
     }
 </script>

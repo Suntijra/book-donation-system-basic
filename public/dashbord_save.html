@@ -1,0 +1,452 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin book save</title>
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- CUSTOM STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <!-- GOOGLE FONTS-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+    <style>
+        .mytable {
+            border-collapse: collapse;
+            margin: 0 auto;
+            font-size: 14px;
+            color: #444444;
+        }
+
+        .myth,
+        .mytd {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+            /* vertical-align: middle; */
+        }
+
+        .myth {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            color: #222222;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mytr:hover {
+            background-color: #f2f2f2;
+        }
+
+        /* Input styles */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            font-size: 16px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+        }
+
+        /* Select options styles */
+        select {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            font-size: 16px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+            /* appearance: none; */
+        }
+
+        select:focus {
+            outline: none;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+        }
+
+        input[type="date"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            font-size: 16px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+            appearance: none;
+            /* remove default arrow */
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            /* invert color of default arrow */
+            margin-left: 10px;
+            /* add some space between input and arrow */
+        }
+
+        input[type="date"]:focus {
+            outline: none;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+        }
+
+        /* CSS */
+        .file-input-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .file-input-label:hover {
+            background-color: #0056b3;
+        }
+
+        .file-input-icon {
+            margin-right: 8px;
+        }
+
+        .file-input-text {
+            font-size: 16px;
+        }
+
+        label {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="adjust-nav">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img src="assets/img/logo.png" />
+                    </a>
+                </div>
+
+                <span class="logout-spn">
+                    <a onclick="logout()" style="color:#fff;">LOGOUT</a>
+
+                </span>
+            </div>
+        </div>
+        <!-- /. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <a>
+                            <i class="fa fa-desktop ">
+
+                            </i> Dashboard<span class="badge"></span></a>
+                    </li>
+                    <li>
+                        <a href="./dashbord.html"><i class="fa fa-table "></i>รายการรอนุมัติ</a>
+                    </li>
+                    <li>
+                        <a href="./dashbord_save.html"><i class="fa fa-table "></i>บันทึกข้อมูลหนังสือ</a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h2>บันทึกข้อมูลหนังสือ </h2>
+                    </div>
+                    <div class="col-md-20">
+                        <label for="">เลือกรายการ</label>
+                        <select onchange="swapage()" name="typesave" id="swappage">
+                            <option value="save_book">บันทึกข้อมูลหนังสือ </option>
+                            <option value="book_list">ราการหนังสือ</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+                <hr />
+                <div id="div_swappage" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="display: flex; flex-direction: column; width: 50%;">
+                        <label for="book_name">ชื่อหนังสือ</label>
+                        <input id="book_name" style="margin-top: 5px;" type="text" name="book_name">
+                        <label style="margin-top: 5px;" for="type">ประเภทหนังสือ</label>
+                        <select style="margin-top: 5px;" name="type" id="book_type">
+                            <option value="">กรุณาเลือกประเภทหนังสือ</option>
+                            <option value="journal">หนังสือวรสาร</option>
+                            <option value="book">หนังสือทั่วไป</option>
+                        </select>
+                        <label for="date_in">วันนำเข้าหนังสือ</label>
+                        <input style="margin-top: 5px;" type="date" name="date_in" id="date_in">
+                        <label for="imgbook">นำเข้ารูปภาพ</label>
+                        <input type="file" onchange="encodeImageFileAsURL(this)" />
+                        <img style="height: 400px; object-fit: contain; background-color: #CCFFFF;" id="showimg" src=""
+                            alt="">
+                        <button style="margin-top: 10px;" onclick="save_info()">บันทึกข้อมูล</button>
+                    </div>
+                </div>
+
+                <script>
+                    async function swapage() {
+                        console.log('swap')
+                        let html = ``
+                        let tbody = ``
+                        let select_page = swappage.value
+                        if (select_page === "save_book") {
+                            console.log('save_book')
+                            html = `<div style="display: flex; flex-direction: column; width: 50%;">
+                        <label for="book_name">ชื่อหนังสือ</label>
+                        <input id="book_name" style="margin-top: 5px;" type="text" name="book_name">
+                        <label style="margin-top: 5px;" for="type">ประเภทหนังสือ</label>
+                        <select style="margin-top: 5px;" name="type" id="book_type">
+                            <option value="">กรุณาเลือกประเภทหนังสือ</option>
+                            <option value="journal">หนังสือวรสาร</option>
+                            <option value="book">หนังสือทั่วไป</option>
+                        </select>
+                        <label for="date_in">วันนำเข้าหนังสือ</label>
+                        <input style="margin-top: 5px;" type="date" name="date_in" id="date_in">
+                        <label for="imgbook">นำเข้ารูปภาพ</label>
+                        <input type="file" onchange="encodeImageFileAsURL(this)" />
+                        <img style="height: 400px; object-fit: contain; background-color: #CCFFFF;" id="showimg" src=""
+                            alt="">
+                        <button style="margin-top: 10px;" onclick="save_info()">บันทึกข้อมูล</button>
+                    </div>`
+                        } else {
+
+                            let headersList = {
+                                "Accept": "*/*",
+                                "User-Agent": "Thunder Client (https://www.thunderclient.com)"
+                            }
+
+                            let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/findall/book", {
+                                method: "GET",
+                                headers: headersList
+                            });
+
+                            let data = await response.json();
+                            let array = data.data
+
+                            html = `<div style="display: flex; flex-direction: column; width: 100%;">
+                                <div style="padding: 10px; overflow: scroll; height: 70vh;">
+                        <table class="mytable">
+                            <thead>
+                                <tr class="mytr">
+                                    <th class="myth">รูปภาพ</th>
+                                    <th class="myth">ชื่อหนังสือ</th>
+                                    <th class="myth">ชนิดหนังสือ</th>
+                                    <th class="myth">วันที่นำเข้า</th>
+                                    <th class="myth">สถานะ</th>
+                                    <th class="myth"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="waiting_approve">
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                                </div>`
+
+                            array.forEach(d => {
+                                console.log(d.date_in)
+                                tbody += `<tr class="mytr">
+                                    <td class="mytd"><img style="width:100px" src="${d.img}" alt=""></td>
+                                    <td class="mytd">${d.book_name}</td>
+                                    <td class="mytd">${d.type === 'journal' ? 'วรสาร' : 'หนังสือ'}</td>
+                                    <td class="mytd">${formatDate(d.date_time_in)}</td>
+                                    <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">${d.status === "import" ? "อยู่ในระบบ" : "ถูกนำส่งออก"}</td>
+                                    <td class="mytd"><button onclick="">ยืนยันมีผู้มารับหนังสือแล้ว</button>
+                                    </td>
+                                </tr>`
+                            })
+                        }
+
+
+                        div_swappage.innerHTML = html
+                        waiting_approve.innerHTML = tbody
+                    }
+                </script>
+
+
+                <!-- /. ROW  -->
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <div class="footer">
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                &copy; 2014 yourdomain.com | Design by: <a href="http://binarytheme.com" style="color:#fff;"
+                    target="_blank">www.binarytheme.com</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-1.10.2.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script src="assets/js/custom.js"></script>
+
+    <script src="./js/auth_admin.js"></script>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    async function save_info() {
+        Swal.fire({
+            title: 'ยืนยันการรับหนังสือ',
+            text: "ตรวจสอบให้แน่ใจว่าได้หนังสือครบถ้วน ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'ยืนยันการรับหนังสือ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                approve_submit()
+                // Swal.fire(
+                //     'บันทึกข้อมูลสำเร็จ!',
+                // )
+            }
+        })
+    }
+    async function approve_submit() {
+        try {
+            let headersList = {
+                "Accept": "*/*",
+                "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+                "Content-Type": "application/json"
+            }
+
+            let bodyContent = JSON.stringify({
+                token: localStorage.getItem('token'),
+                "book_name": book_name.value,
+                "date_time_in": new Date(date_in.value).getTime(),
+                "img": IMG_FILE_FOR_SEND_TO_DB,
+                "type": book_type.value
+            });
+
+            let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/approved", {
+                method: "POST",
+                body: bodyContent,
+                headers: headersList
+            });
+
+            let data = await response.json();
+            console.log(data);
+            let msg = data.message
+            if (msg === "success") {
+                book_name.value = ''
+                date_in.value = ''
+                IMG_FILE_FOR_SEND_TO_DB = ''
+                book_type.value = ''
+                showimg.src = ''
+                Swal.fire({
+                    icon: 'success',
+                    title: 'หนังสือ',
+                    text: 'นำเข้าหนังสือสำเร็จ',
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }
+
+        } catch (err) {
+            console.log(err)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }
+
+    }
+    let IMG_FILE_FOR_SEND_TO_DB = ''
+    function encodeImageFileAsURL(element) {
+        var file = element.files[0];
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            // console.log('RESULT', reader.result)
+            IMG_FILE_FOR_SEND_TO_DB = reader.result
+            showimg.src = IMG_FILE_FOR_SEND_TO_DB
+        }
+        reader.readAsDataURL(file);
+    }
+    function logout() {
+        localStorage.setItem("token", '')
+        window.location.reload()
+    }
+    function formatDate(mil) {
+        const date = new Date(mil);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // add 1 to adjust for zero-based month indexing and pad with zeros
+        const day = date.getDate().toString().padStart(2, '0'); // pad with zeros
+
+        const formattedDate = `${year}-${month}-${day}`; // using string literals
+
+        // Alternatively, using the join() method:
+        // const formattedDate = [year, month, day].join('-');
+
+        console.log(formattedDate); // Output: "2023-04-04"
+        return formattedDate
+    }
+</script>

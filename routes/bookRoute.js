@@ -12,5 +12,7 @@ router.post('/send', auth, book_controller.verifyBook)
 
 router.get("/findall",book_controller.findAll)
 router.post("/update/id",book_controller.updateStatusByItId)
+router.get("/findall/book",book_controller.findAllBook)
+router.post("/approved",book_controller.approved)
 
 module.exports = router;

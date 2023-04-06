@@ -15,8 +15,10 @@ let adminRoute = require('./routes/adminRoute')
 
 //middleware
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())// parse application/json
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(express.json({limit: '25mb'}));
+app.use(express.urlencoded({limit: '25mb'}));
 app.set('trust proxy', 1) // trust first proxy
 
 // app.use(session({

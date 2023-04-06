@@ -1,4 +1,5 @@
 let importTimeModel = require('../models/importTimeModel')
+let bookModel = require("../models/bookModel")
 var jwt = require('jsonwebtoken');
 const secret_key = 'book'
 
@@ -38,10 +39,35 @@ module.exports = {
     },
     updateStatusByItId: async (req, res) => {
         try {
-            const {id} = req.body
-            console.log('id ',id)
+            const { id } = req.body
+            console.log('id ', id)
             const [row, fields] = await importTimeModel.updateStatus(id)
             res.status(200).json({ message: 'success', data: row });
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    },
+    findAllBook: async (req, res) => {
+        try {
+            const [row, fields] = await bookModel.findAll()
+            res.status(200).json({ message: 'success', data: row });
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    },
+    approved: async (req, res) => {
+        try {
+            const {book_name,date_time_in,img,type,token} = req.body
+            let uid = jwt_decoded(token).id
+            if(uid && book_name && date_time_in && img && type){
+                const [row, fields] = await bookModel.insertBook(uid,book_name,date_time_in,img,type)
+                console.log(row)
+                res.status(200).json({ message: 'success', data: row });
+            }else{
+                res.status(400).json({ message: 'client wrong' });
+            }
         } catch (error) {
             console.log(error)
             res.status(500).json({ message: 'Internal server error' });
