@@ -59,18 +59,38 @@ module.exports = {
     },
     approved: async (req, res) => {
         try {
-            const {book_name,date_time_in,img,type,token} = req.body
+            const { book_name, date_time_in, img, type, token } = req.body
             let uid = jwt_decoded(token).id
-            if(uid && book_name && date_time_in && img && type){
-                const [row, fields] = await bookModel.insertBook(uid,book_name,date_time_in,img,type)
+            if (uid && book_name && date_time_in && img && type) {
+                const [row, fields] = await bookModel.insertBook(uid, book_name, date_time_in, img, type)
                 console.log(row)
                 res.status(200).json({ message: 'success', data: row });
-            }else{
+            } else {
                 res.status(400).json({ message: 'client wrong' });
             }
         } catch (error) {
             console.log(error)
             res.status(500).json({ message: 'Internal server error' });
+        }
+    },
+    updateStatus: async (req, res) => {
+        try {
+            const { date_time_out, id } = req.body
+            if (date_time_out && id) {
+                const [find_id_row, find_id_fields] = await bookModel.findAllById(id)
+                if (find_id_row[0].date_time_in > date_time_out) {
+                    res.status(400).json({ message: 'จำนวนเวลาที่ส่งมาไม่ถูกต้อง' });
+                } else {
+                      const [update_row, update_fields] = await bookModel.updateById(id,date_time_out)
+                      res.status(200).json({ message: 'success', data: update_row });
+                }
+            } else {
+                res.status(400).json({ message: 'client wrong' });
+            }
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ message: 'Internal server error' });
+
         }
     }
 }

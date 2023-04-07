@@ -11,8 +11,9 @@ const auth = require('../middleware/auth')
 router.post('/send', auth, book_controller.verifyBook)
 
 router.get("/findall",book_controller.findAll)
-router.post("/update/id",book_controller.updateStatusByItId)
+router.post("/update/id",auth,book_controller.updateStatusByItId)
 router.get("/findall/book",book_controller.findAllBook)
-router.post("/approved",book_controller.approved)
+router.post("/approved",auth,book_controller.approved)
+router.post("/update/status",book_controller.updateStatus)
 
 module.exports = router;

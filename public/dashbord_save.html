@@ -15,6 +15,40 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 
     <style>
+        /* Modal Container */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 300px;
+            margin: 100px auto;
+        }
+
+        /* Close Button */
+        .close {
+            float: right;
+            cursor: pointer;
+        }
+
+        /* Input Field */
+        .modal-content input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
         .mytable {
             border-collapse: collapse;
             margin: 0 auto;
@@ -295,14 +329,15 @@
                                 </div>`
 
                             array.forEach(d => {
-                                console.log(d.date_in)
+                                console.log(d)
                                 tbody += `<tr class="mytr">
                                     <td class="mytd"><img style="width:100px" src="${d.img}" alt=""></td>
                                     <td class="mytd">${d.book_name}</td>
                                     <td class="mytd">${d.type === 'journal' ? 'วรสาร' : 'หนังสือ'}</td>
                                     <td class="mytd">${formatDate(d.date_time_in)}</td>
                                     <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">${d.status === "import" ? "อยู่ในระบบ" : "ถูกนำส่งออก"}</td>
-                                    <td class="mytd"><button onclick="">ยืนยันมีผู้มารับหนังสือแล้ว</button>
+                                    ${d.status === "import" ? ` <td class="mytd"><button onclick="openModal(${d.id});">ยืนยันมีผู้มารับหนังสือแล้ว</button>` : ` <td class="mytd">`}
+                                   
                                     </td>
                                 </tr>`
                             })
@@ -331,6 +366,15 @@
             </div>
         </div>
     </div>
+    <div id="myModal" class="modal">
+        <!-- Modal Content -->
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>เลือกวัน</h2>
+            <input type="date" id="datePicker">
+            <button style="margin-top: 40px; width:100px;" onclick="confirm_update(ID_FOR_FOR_UPDATE_STATUS_BOOK)">ยืนยัน</button>
+        </div>
+    </div>
 
 
     <!-- /. WRAPPER  -->
@@ -348,6 +392,7 @@
 </html>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    let ID_FOR_FOR_UPDATE_STATUS_BOOK = ''
     async function save_info() {
         Swal.fire({
             title: 'ยืนยันการรับหนังสือ',
@@ -448,5 +493,62 @@
 
         console.log(formattedDate); // Output: "2023-04-04"
         return formattedDate
+    }
+    // Open Modal
+    function openModal(id) {
+        ID_FOR_FOR_UPDATE_STATUS_BOOK = id
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    // Close Modal
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+    async function confirm_update(id) {
+        try {
+            let headersList = {
+                "Accept": "*/*",
+                "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+                "Content-Type": "application/json"
+            }
+
+            let bodyContent = JSON.stringify({
+                "id": id,
+                "date_time_out": new Date(datePicker.value).getTime()
+            });
+
+            let response = await fetch(localStorage.getItem('url_endpoint')+"/api/book/update/status", {
+                method: "POST",
+                body: bodyContent,
+                headers: headersList
+            });
+
+            let data = await response.json();
+            let msg = data.message
+            if (msg === "success") {
+                datePicker.value = ''
+                Swal.fire({
+                    icon: 'success',
+                    title: 'หนังสือ',
+                    text: 'ส่งออกหนังสือสำเร็จ',
+                })
+            } else {
+                datePicker.value = ''
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }
+        }
+        catch (err) {
+            console.log(err)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }
+
     }
 </script>

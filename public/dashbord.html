@@ -232,7 +232,8 @@
             }
 
             let bodyContent = JSON.stringify({
-                "id": id
+                "id": id,
+                "token" : localStorage.getItem("token")
             });
 
             let response = await fetch(localStorage.getItem("url_endpoint") + "/api/book/update/id", {

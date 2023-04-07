@@ -17,9 +17,17 @@ module.exports = {
     const [rows, fields] = await db.execute('SELECT * FROM book');
     return [rows, fields];
   },
-  insertBook: async (uid,book_name,date_time_in,img,type) => {
+  findAllById: async (id) => {
+    const [rows, fields] = await db.execute('SELECT * FROM book where id = ?',[id]);
+    return [rows, fields];
+  },
+  insertBook: async (uid, book_name, date_time_in, img, type) => {
     const [rows, fields] = await db.execute(`insert into book (uid,book_name,date_time_in,img,type)
-    VALUES (?, ?, ?, ?,?);`,[uid,book_name,date_time_in,img,type]);
+    VALUES (?, ?, ?, ?,?);`, [uid, book_name, date_time_in, img, type]);
+    return [rows, fields];
+  },
+  updateById: async (id, date_time_out) => {
+    const [rows, fields] = await db.execute(`UPDATE book SET status = 'export', date_time_out = ? WHERE id = ? ;`, [date_time_out, id]);
     return [rows, fields];
 
   }
