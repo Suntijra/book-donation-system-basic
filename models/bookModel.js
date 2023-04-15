@@ -17,13 +17,26 @@ module.exports = {
     const [rows, fields] = await db.execute('SELECT * FROM book');
     return [rows, fields];
   },
-  findAllById: async (id) => {
-    const [rows, fields] = await db.execute('SELECT * FROM book where id = ?',[id]);
+  findAllWithInfoEmployee: async () => {
+    const [rows, fields] = await db.execute(`
+    SELECT b.* , u.email FROM book as b 
+    left join user as u on u.id = b.uid`);
     return [rows, fields];
   },
-  insertBook: async (uid, book_name, date_time_in, img, type) => {
-    const [rows, fields] = await db.execute(`insert into book (uid,book_name,date_time_in,img,type)
-    VALUES (?, ?, ?, ?,?);`, [uid, book_name, date_time_in, img, type]);
+  findAllWithInfoEmployee2: async () => {
+    const [rows, fields] = await db.execute(`
+    SELECT * FROM book as b 
+    left join user as u2 on u2.id = b.ugetbook`);
+    return [rows, fields];
+  },
+  findAllById: async (id) => {
+    const [rows, fields] = await db.execute('SELECT * FROM book where id = ?', [id]);
+    return [rows, fields];
+  }, 
+
+  insertBook: async (approve_id,uid ,book_name, date_time_in, img, type) => {
+    const [rows, fields] = await db.execute(`insert into book (approve_id,uid,book_name,date_time_in,img,type)
+    VALUES (?, ?, ?, ?,?,?);`, [approve_id,uid, book_name, date_time_in, img, type]);
     return [rows, fields];
   },
   updateById: async (id, date_time_out) => {

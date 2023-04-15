@@ -17,6 +17,10 @@ module.exports = {
     const [rows, fields] = await db.execute('SELECT * FROM user');
     return [rows, fields];
   },
+  findIdByEmail: async (email) => {
+    const [rows, fields] = await db.execute('SELECT * FROM user where email = ? limit 1',[email]);
+    return [rows, fields];
+  },
   checkUserInSystemByUserAndPwd: async (user, pwd) => {
     const [rows, fields] = await db.execute(`SELECT id,fname,lname,email,phoneno,lineID,level FROM user where username = ? and password = ?`, [user, pwd]);
     return [rows, fields]

@@ -108,7 +108,7 @@
             font-size: 16px;
             box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
             transition: all 0.2s ease-in-out;
-            /* appearance: none; */
+            appearance: none;
         }
 
         select:focus {
@@ -252,6 +252,8 @@
                     <div style="display: flex; flex-direction: column; width: 50%;">
                         <label for="book_name">ชื่อหนังสือ</label>
                         <input id="book_name" style="margin-top: 5px;" type="text" name="book_name">
+                        <label for="person1">อีเมล: คนบริจาค</label>
+                        <input id="person1" style="margin-top: 5px;" type="text" name="person1">
                         <label style="margin-top: 5px;" for="type">ประเภทหนังสือ</label>
                         <select style="margin-top: 5px;" name="type" id="book_type">
                             <option value="">กรุณาเลือกประเภทหนังสือ</option>
@@ -279,6 +281,8 @@
                             html = `<div style="display: flex; flex-direction: column; width: 50%;">
                         <label for="book_name">ชื่อหนังสือ</label>
                         <input id="book_name" style="margin-top: 5px;" type="text" name="book_name">
+                        <label for="book_name">อีเมล: คนบริจาค</label>
+                        <input id="person1" style="margin-top: 5px;" type="text" name="person1">
                         <label style="margin-top: 5px;" for="type">ประเภทหนังสือ</label>
                         <select style="margin-top: 5px;" name="type" id="book_type">
                             <option value="">กรุณาเลือกประเภทหนังสือ</option>
@@ -307,6 +311,7 @@
 
                             let data = await response.json();
                             let array = data.data
+                            let user_get = data.user_get
 
                             html = `<div style="display: flex; flex-direction: column; width: 100%;">
                                 <div style="padding: 10px; overflow: scroll; height: 70vh;">
@@ -317,6 +322,8 @@
                                     <th class="myth">ชื่อหนังสือ</th>
                                     <th class="myth">ชนิดหนังสือ</th>
                                     <th class="myth">วันที่นำเข้า</th>
+                                    <th class="myth">ผู้บริจาคหนังสือ</th>
+                                    <th class="myth">ผู้มารับหนังสือบริจาค</th>
                                     <th class="myth">สถานะ</th>
                                     <th class="myth"></th>
                                 </tr>
@@ -328,16 +335,18 @@
                     </div>
                                 </div>`
 
-                            array.forEach(d => {
+                            array.forEach((d, index) => {
                                 console.log(d)
+                                let uget = user_get[index]
                                 tbody += `<tr class="mytr">
                                     <td class="mytd"><img style="width:100px" src="${d.img}" alt=""></td>
                                     <td class="mytd">${d.book_name}</td>
                                     <td class="mytd">${d.type === 'journal' ? 'วรสาร' : 'หนังสือ'}</td>
                                     <td class="mytd">${formatDate(d.date_time_in)}</td>
+                                    <td class="mytd">${d.email}</td>
+                                    <td class="mytd">${uget.ugetbook !== 0 ? uget.email : "-"}</td>
                                     <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">${d.status === "import" ? "อยู่ในระบบ" : "ถูกนำส่งออก"}</td>
-                                    ${d.status === "import" ? ` <td class="mytd"><button onclick="openModal(${d.id});">ยืนยันมีผู้มารับหนังสือแล้ว</button>` : ` <td class="mytd">`}
-                                   
+                                    ${d.status === "import" ? ` <td class="mytd"><button onclick="openModal(${d.id},'${uget.email}','${d.img}');">ยืนยันมีผู้มารับหนังสือแล้ว</button>` : ` <td class="mytd">`}
                                     </td>
                                 </tr>`
                             })
@@ -372,7 +381,8 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>เลือกวัน</h2>
             <input type="date" id="datePicker">
-            <button style="margin-top: 40px; width:100px;" onclick="confirm_update(ID_FOR_FOR_UPDATE_STATUS_BOOK)">ยืนยัน</button>
+            <button style="margin-top: 40px; width:100px;"
+                onclick="confirm_update(ID_FOR_FOR_UPDATE_STATUS_BOOK,TO_EMAIL_1,TO_BASE64_1_IMG)">ยืนยัน</button>
         </div>
     </div>
 
@@ -424,7 +434,8 @@
                 "book_name": book_name.value,
                 "date_time_in": new Date(date_in.value).getTime(),
                 "img": IMG_FILE_FOR_SEND_TO_DB,
-                "type": book_type.value
+                "type": book_type.value,
+                "email": person1.value
             });
 
             let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/approved", {
@@ -442,6 +453,7 @@
                 IMG_FILE_FOR_SEND_TO_DB = ''
                 book_type.value = ''
                 showimg.src = ''
+                person1.value = ''
                 Swal.fire({
                     icon: 'success',
                     title: 'หนังสือ',
@@ -495,8 +507,12 @@
         return formattedDate
     }
     // Open Modal
-    function openModal(id) {
+    let TO_BASE64_1_IMG = ''
+    let TO_EMAIL_1 = ''
+    function openModal(id, to_email, base64_img) {
         ID_FOR_FOR_UPDATE_STATUS_BOOK = id
+        TO_BASE64_1_IMG = base64_img
+        TO_EMAIL_1 = to_email
         document.getElementById("myModal").style.display = "block";
     }
 
@@ -504,41 +520,65 @@
     function closeModal() {
         document.getElementById("myModal").style.display = "none";
     }
-    async function confirm_update(id) {
+    async function confirm_update(id, to_email, base64_img) {
         try {
-            let headersList = {
-                "Accept": "*/*",
-                "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-                "Content-Type": "application/json"
-            }
+            console.log(id, to_email, base64_img)
 
-            let bodyContent = JSON.stringify({
-                "id": id,
-                "date_time_out": new Date(datePicker.value).getTime()
-            });
+            if (id && to_email && base64_img) {
 
-            let response = await fetch(localStorage.getItem('url_endpoint')+"/api/book/update/status", {
-                method: "POST",
-                body: bodyContent,
-                headers: headersList
-            });
+                let headersList = {
+                    "Accept": "*/*",
+                    "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+                    "Content-Type": "application/json"
+                }
 
-            let data = await response.json();
-            let msg = data.message
-            if (msg === "success") {
-                datePicker.value = ''
-                Swal.fire({
-                    icon: 'success',
-                    title: 'หนังสือ',
-                    text: 'ส่งออกหนังสือสำเร็จ',
-                })
-            } else {
-                datePicker.value = ''
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                })
+                let bodyContent = JSON.stringify({
+                    "id": id,
+                    "date_time_out": new Date(datePicker.value).getTime()
+                });
+
+                let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/update/status", {
+                    method: "POST",
+                    body: bodyContent,
+                    headers: headersList
+                });
+
+                let data = await response.json();
+                let msg = data.message
+
+
+                let bodyContent2 = JSON.stringify({
+                    "token": localStorage.getItem("token"),
+                    "to_email": to_email,
+                    "base64_img": base64_img
+
+                });
+
+                let response2 = await fetch(localStorage.getItem('url_endpoint') + "/send-email", {
+                    method: "POST",
+                    body: bodyContent2,
+                    headers: headersList
+                });
+
+                let data_email = await response2.json();
+                console.log(data_email.msg);
+                let email_msg = data_email.msg
+                if (msg === "success" && email_msg === "success") {
+                    datePicker.value = ''
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'หนังสือ',
+                        text: 'ส่งออกหนังสือสำเร็จ',
+                    })
+                    closeModal()
+                } else {
+                    datePicker.value = ''
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                }
             }
         }
         catch (err) {
