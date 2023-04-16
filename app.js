@@ -55,11 +55,17 @@ app.use('/api/admin', adminRoute)
 app.post('/send-email/test', (req, res) => {
     transporter.sendMail({
         from: 'sunti.po61@rsu.ac.th>',   // ผู้ส่ง
-        // to: "saknsaza87@gmail.com",// ผู้รับ
-         to: "sunti.porkhamchan@gmail.com",// ผู้
-        subject: "สวัสดีจ้า",                      // หัวข้อ
+        to: "saknsaza87@gmail.com",// ผู้รับ
+        //  to: "sunti.porkhamchan@gmail.com",// ผู้
+        subject: "Book Donation",                      // หัวข้อ
         text: "สวัสดีนะ",                         // ข้อความ
-        html: "<b>สวัสดี</b>ครับ<br><img src='https://media.giphy.com/media/TfY3cjjH0aYopkybqc/giphy.gif'>",                // ข้อความ
+        html: `
+        ทางเว็บไซต์ “Book Donation“ ได้บริจาคหนังสือและวารสารตามที่ท่านร้องขอแล้ว หวังว่าหนังสือและวารสารที่ท่านได้รับจะมีประโยชน์สูงสุด 
+        <br>
+        <br>
+        <br>
+        ขอแสดงความนับถือ 
+        `,                // ข้อความ
     }, (err, info) => {
         if (err) {
             console.log(err);
@@ -106,10 +112,14 @@ app.post('/send-email', auth, (req, res) => {
     transporter.sendMail({
       from: 'sunti.po61@rsu.ac.th',
       to: to_email,
-      subject: 'จากมหาวิทยาลัยรังสิตเรื่องการรับบริจาคหนังสือ',
+      subject: 'Book Donation',
       text: 'ขอขอบคุณ',
-      html: `<b>ขอขอบคุณที่มารับหนังสือเล่มนี้</b>
-        <br>
+      html: `
+      ทางเว็บไซต์ “Book Donation“ ได้บริจาคหนังสือและวารสารตามที่ท่านร้องขอแล้ว หวังว่าหนังสือและวารสารที่ท่านได้รับจะมีประโยชน์สูงสุด 
+      <br>
+      <br>
+      <br>
+      ขอแสดงความนับถือ 
         <img src="cid:image">`,
       attachments: attachments
     }, (err, info) => {

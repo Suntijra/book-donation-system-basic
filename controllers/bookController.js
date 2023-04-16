@@ -98,5 +98,18 @@ module.exports = {
             res.status(500).json({ message: 'Internal server error' });
 
         }
+    },
+    requestbook : async (req,res) =>{
+        try {
+            const {token ,arr} = req.body
+            let id = jwt_decoded(token).id
+            arr.forEach(async e => {
+                const [update_row, update_fields] = await bookModel.updateUget(id,e)
+            });
+            res.status(200).json({ message: 'success' });
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ message: 'Internal server error' });
+        }
     }
 }

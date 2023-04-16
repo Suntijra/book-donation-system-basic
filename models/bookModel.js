@@ -19,8 +19,9 @@ module.exports = {
   },
   findAllWithInfoEmployee: async () => {
     const [rows, fields] = await db.execute(`
-    SELECT b.* , u.email FROM book as b 
+    SELECT b.* , u.email, u.fname FROM book as b 
     left join user as u on u.id = b.uid`);
+
     return [rows, fields];
   },
   findAllWithInfoEmployee2: async () => {
@@ -32,15 +33,21 @@ module.exports = {
   findAllById: async (id) => {
     const [rows, fields] = await db.execute('SELECT * FROM book where id = ?', [id]);
     return [rows, fields];
-  }, 
+  },
 
-  insertBook: async (approve_id,uid ,book_name, date_time_in, img, type) => {
+  insertBook: async (approve_id, uid, book_name, date_time_in, img, type) => {
     const [rows, fields] = await db.execute(`insert into book (approve_id,uid,book_name,date_time_in,img,type)
-    VALUES (?, ?, ?, ?,?,?);`, [approve_id,uid, book_name, date_time_in, img, type]);
+    VALUES (?, ?, ?, ?,?,?);`, [approve_id, uid, book_name, date_time_in, img, type]);
     return [rows, fields];
   },
   updateById: async (id, date_time_out) => {
     const [rows, fields] = await db.execute(`UPDATE book SET status = 'export', date_time_out = ? WHERE id = ? ;`, [date_time_out, id]);
+    return [rows, fields];
+
+  },
+  updateUget: async (uget, id) => {
+    const [rows, fields] = await db.execute(` UPDATE book SET ugetbook = ?
+    WHERE id = ?;`, [uget, id]);
     return [rows, fields];
 
   }

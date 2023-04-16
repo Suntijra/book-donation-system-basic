@@ -324,6 +324,7 @@
                                     <th class="myth">วันที่นำเข้า</th>
                                     <th class="myth">ผู้บริจาคหนังสือ</th>
                                     <th class="myth">ผู้มารับหนังสือบริจาค</th>
+                                    <th class="myth">สถานะการร้องขอหนังสือ</th>
                                     <th class="myth">สถานะ</th>
                                     <th class="myth"></th>
                                 </tr>
@@ -336,16 +337,28 @@
                                 </div>`
 
                             array.forEach((d, index) => {
-                                console.log(d)
+                                // console.log(d)
                                 let uget = user_get[index]
+                                let request_text =''
+                                let request_color = 'orange'
+                                if(d.status === "import" && uget.ugetbook === 0){
+                                    request_text = 'ยังไม่มีการร้องขอ'
+                                    request_color = 'green'
+                                }else if (uget.ugetbook !== 0 && d.status === "import"){
+                                    request_text = 'ร้องขอหนังสือ'
+                                }else{
+                                    request_text = 'อนุมัติหนังสือ'
+                                    request_color = 'green'
+                                }
                                 tbody += `<tr class="mytr">
                                     <td class="mytd"><img style="width:100px" src="${d.img}" alt=""></td>
                                     <td class="mytd">${d.book_name}</td>
                                     <td class="mytd">${d.type === 'journal' ? 'วรสาร' : 'หนังสือ'}</td>
                                     <td class="mytd">${formatDate(d.date_time_in)}</td>
-                                    <td class="mytd">${d.email}</td>
+                                    <td class="mytd">${d.fname}</td>
                                     <td class="mytd">${uget.ugetbook !== 0 ? uget.email : "-"}</td>
-                                    <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">${d.status === "import" ? "อยู่ในระบบ" : "ถูกนำส่งออก"}</td>
+                                    <th class="mytd"style="color : ${request_color} " >${request_text}</th>
+                                    <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">${d.status === "import"  ? "อยู่ในระบบ" : "ถูกนำส่งออก"}</td>
                                     ${d.status === "import" ? ` <td class="mytd"><button onclick="openModal(${d.id},'${uget.email}','${d.img}');">ยืนยันมีผู้มารับหนังสือแล้ว</button>` : ` <td class="mytd">`}
                                     </td>
                                 </tr>`
@@ -503,7 +516,7 @@
         // Alternatively, using the join() method:
         // const formattedDate = [year, month, day].join('-');
 
-        console.log(formattedDate); // Output: "2023-04-04"
+        // console.log(formattedDate); // Output: "2023-04-04"
         return formattedDate
     }
     // Open Modal
@@ -522,9 +535,9 @@
     }
     async function confirm_update(id, to_email, base64_img) {
         try {
-            console.log(id, to_email, base64_img)
+            // console.log(id, to_email, base64_img)
 
-            if (id && to_email && base64_img) {
+            if (id && to_email && base64_img && datePicker.value) {
 
                 let headersList = {
                     "Accept": "*/*",
@@ -579,6 +592,12 @@
                         text: 'Something went wrong!',
                     })
                 }
+            }else{
+                Swal.fire({
+                icon: 'error',
+                title: 'วันที่',
+                text: 'กรุณาเลือกวันที่',
+            })
             }
         }
         catch (err) {

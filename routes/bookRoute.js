@@ -15,5 +15,6 @@ router.post("/update/id",auth,book_controller.updateStatusByItId)
 router.get("/findall/book",book_controller.findAllBook)
 router.post("/approved",auth,book_controller.approved)
 router.post("/update/status",book_controller.updateStatus)
+router.post("/requsets",book_controller.requestbook)
 
 module.exports = router;

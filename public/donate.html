@@ -32,6 +32,34 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <style>
+        /* Define CSS classes for table styling */
+        .table-container {
+            width: 100%;
+            overflow: auto;
+            height: max-content;
+            max-height: 50vh;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -49,7 +77,8 @@
             <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
                 <h1 class="fw-bold text-primary m-0">Book<span class="text-white">Donation</span></h1>
             </a>
-            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -74,7 +103,7 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center">
-            <h1 class="display-4 text-white animated slideInDown mb-4">รับบริจาคหนังสือ</h1>
+            <h1 class="display-4 text-white animated slideInDown mb-4">หนังสือ</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
@@ -90,118 +119,260 @@
     <div class="container-fluid py-5">
         <div class="container">
             <div class="row g-5 align-items-center">
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="wow fadeIn" data-wow-delay="0.1s">
                     <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Donate Now</div>
-                    <h1 class="display-6 mb-5">Thanks For The Results Achieved With You</h1>
+                    <h1 class="display-6 mb-5">รายการหนังสือ</h1>
                     <p class="mb-0">
-                        <b><u>หมายเหตุ</u></b>&nbsp;ทรัพยากรสารสนเทศที่ได้รับบริจาคเป็นกรรมสิทธิ์ของสำนักหอสมุด
-                        ในกรณีที่ทรัพยากรสารสนเทศไม่ตรงตามนโยบาย
-                        การรับบริจาค หรือไม่สอดคล้องกับหลักสูตรการเรียนการสอนในมหาวิทยาลัย ห้องสมุดจะดำเนินการต่อไป</p>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>รูปภาพ</th>
+                                    <th>ชื่อหนังสือ</th>
+                                    <th>ชนิดหนังสือ</th>
+                                    <th>วันที่นำเข้า</th>
+                                    <th>วันที่นำออก</th>
+                                    <th>ผู้บริจาคหนังสือ</th>
+                                    <th>ผู้มารับหนังสือบริจาค</th>
+                                    <th>สถานะการร้องขอหนังสือ</th>
+                                    <th>สถานะ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mytbody">
+                                <tr>
+                                    <td><img src="image1.jpg" alt="รูปภาพหนังสือ"></td>
+                                    <td>ชื่อหนังสือ 1</td>
+                                    <td>ชนิดหนังสือ 1</td>
+                                    <td>วันที่นำเข้า 1</td>
+                                    <td>วันที่นำเข้า 1</td>
+                                    <td>ผู้บริจาคหนังสือ 1</td>
+                                    <td>ผู้มารับหนังสือบริจาค 1</td>
+                                    <td>สถานะ 1</td>
+                                </tr>
+                                <tr>
+                                    <td><img src="image2.jpg" alt="รูปภาพหนังสือ"></td>
+                                    <td>ชื่อหนังสือ 2</td>
+                                    <td>ชนิดหนังสือ 2</td>
+                                    <td>วันที่นำเข้า 2</td>
+                                    <td>ผู้บริจาคหนังสือ 2</td>
+                                    <td>ผู้มารับหนังสือบริจาค 2</td>
+                                    <td>สถานะ 2</td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                    <div class="h-100 bg-secondary p-5">
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0" id="name"
-                                            placeholder="Your Name">
-                                        <label for="name">ชื่อ</label>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0" id="lname"
-                                            placeholder="Your Lastname">
-                                        <label for="lname">นามสกุล</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0" id="address"
-                                            placeholder="Your address">
-                                        <label for="address">ที่อยู่</label>
-                                    </div>
-                                </div>
-
-                                <b>
-                                    <p class="mb-0">โปรดเลือก</p>
-                                </b>
-                                <div class="col-6">
-                                    <input class="form-check-input" type="radio" id="p0" name="fav_language"
-                                        value="dn1">
-                                    <label for="html">ผู้บริจาค</label>
-                                </div>
-                                <div class="col-6">
-                                    <input class="form-check-input" type="radio" id="p1" name="fav_language"
-                                        value="dn2">
-                                    <label for="css">ผู้รับบริจาค</label>
-                                </div>
-
-                                <b>
-                                    <p class="mb-0">ประเภท</p>
-                                </b>
-                                <div class="col-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="book">
-                                        <label class="form-check-label" for="flexCheckDefault">หนังสือ</label>
-                                    </div>
-                                </div>
-                                <div class="col-2 text-end">
-                                    <p>จำนวน</p>
-                                </div>
-                                <div class="col-2">
-                                    <div class="form">
-                                        <input type="text" class="form-control bg-light border-0" id="amount_b"
-                                            placeholder="">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <p>เล่ม</p>
-                                </div>
-
-                                <div class="col-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="paper">
-                                        <label class="form-check-label" for="flexCheckChecked">วารสาร</label>
-                                    </div>
-                                </div>
-                                <div class="col-2 text-end">
-                                    <p>จำนวน</p>
-                                </div>
-                                <div class="col-2">
-                                    <div class="form">
-                                        <input type="text" class="form-control bg-light border-0" id="amount_p"
-                                            placeholder="">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <p>เล่ม</p>
-                                </div>
-
-                                <div> 
-                                    <form action="/action_page.php">
-                                        <label for="datetime">วันที่บริจาคหนังสือ</label>&nbsp;&nbsp;&nbsp;
-                                        <input type="date" id="date" name="date">
-                                    </form>
-                                </div>
-
-                                <div class="col-12 mt-5">
-                                    <button class="btn btn-primary px-5" style="height: 60px;" id="donate_btn">
-                                        Submit
-                                        <div
-                                            class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                                            <i class="fa fa-arrow-right"></i>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                <div class="fs-3">รายการที่เลือก</div>
+                <div class="col-lg-12 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="h-100 w-100 bg-secondary p-5">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>รูปภาพ</th>
+                                        <th>ชื่อหนังสือ</th>
+                                        <th>ชนิดหนังสือ</th>
+                                        <th>วันที่นำเข้า</th>
+                                        <th>วันที่นำออก</th>
+                                        <th>ผู้บริจาคหนังสือ</th>
+                                        <th>ผู้มารับหนังสือบริจาค</th>
+                                        <th>สถานะการร้องขอหนังสือ</th>
+                                        <th>สถานะ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mytbody2">
+                                    <tr>
+                                        <td class="text-center" colspan="9">ยังไม่ได้เลือกราการหนังสือ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="text-center">
+                <button onclick="confirm_book()">ตกลง</button>
+            </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        render_book()
+        async function render_book() {
+            let headersList = {
+                "Accept": "*/*",
+                "User-Agent": "Thunder Client (https://www.thunderclient.com)"
+            }
+
+            let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/findall/book", {
+                method: "GET",
+                headers: headersList
+            });
+            let tbody = ``
+            let data = await response.json();
+            console.log(data)
+            let array = data.data
+            let user_get = data.user_get
+            array.forEach((d, index) => {
+                console.log(d)
+                let new_d = JSON.stringify(d)
+                let uget = user_get[index]
+                let new_uget = JSON.stringify(uget)
+                let request_text = ''
+                let request_color = 'orange'
+                if (d.status === "import" && uget.ugetbook === 0) {
+                    request_text = 'ยังไม่มีการร้องขอ'
+                    request_color = 'green'
+                } else if (uget.ugetbook !== 0 && d.status === "import") {
+                    request_text = 'ร้องขอหนังสือ'
+                } else {
+                    request_text = 'อนุมัติหนังสือ'
+                    request_color = 'green'
+                }
+                tbody += `<tr class="mytr">
+                                    <td class="mytd"><img style="width:100px" src="${d.img}" alt=""></td>
+                                    <td class="mytd">${d.book_name}</td>
+                                    <td class="mytd">${d.type === 'journal' ? 'วรสาร' : 'หนังสือ'}</td>
+                                    <td class="mytd">${formatDate(d.date_time_in)}</td>
+                                    <td class="mytd">${d.date_time_out ? formatDate(d.date_time_out) : "-"}</td>
+                                    <td class="mytd">${d.fname}</td>
+                                    <td class="mytd">${uget.ugetbook !== 0 ? uget.email : "-"}</td>
+                                    <td class="mytd" style="color:${request_color}">${request_text}</td>
+                                    <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">${d.status === "import" ? "อยู่ในระบบ" : "ถูกนำส่งออก"}</td>
+                                    ${d.status === "import" && request_text === 'ยังไม่มีการร้องขอ' ? ` <td class="mytd"><button onclick='select_table(${d.id})'>เลือกรายการหนังสือ</button>` : ` <td class="mytd">`}
+                                    </td>
+                                </tr>`
+            })
+            mytbody.innerHTML = tbody
+        }
+        let select_array = []
+        async function select_table(id) {
+            !select_array.includes(id) && select_array.push(id)
+            let headersList = {
+                "Accept": "*/*",
+                "User-Agent": "Thunder Client (https://www.thunderclient.com)"
+            }
+
+            let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/findall/book", {
+                method: "GET",
+                headers: headersList
+            });
+            let tbody = ``
+            let data = await response.json();
+            console.log(data)
+            let array = data.data
+            let user_get = data.user_get
+            array.forEach((d, index) => {
+                let uget = user_get[index]
+                let request_text = ''
+                let request_color = 'orange'
+                if (d.status === "import" && uget.ugetbook === 0) {
+                    request_text = 'ยังไม่มีการร้องขอ'
+                    request_color = 'green'
+                } else if (uget.ugetbook !== 0 && d.status === "import") {
+                    request_text = 'ร้องขอหนังสือ'
+                } else {
+                    request_text = 'อนุมัติหนังสือ'
+                    request_color = 'green'
+                }
+                if (select_array.includes(d.id)) {
+                    tbody += `<tr class="mytr">
+                                    <td class="mytd"><img style="width:100px" src="${d.img}" alt=""></td>
+                                    <td class="mytd">${d.book_name}</td>
+                                    <td class="mytd">${d.type === 'journal' ? 'วรสาร' : 'หนังสือ'}</td>
+                                    <td class="mytd">${formatDate(d.date_time_in)}</td>
+                                    <td class="mytd">${d.date_time_out ? formatDate(d.date_time_out) : "-"}</td>
+                                    <td class="mytd">${d.fname}</td>
+                                    <td class="mytd">${uget.ugetbook !== 0 ? uget.email : "-"}</td>
+                                    <td class="mytd" style="color:${request_color}">${request_text}</td>
+                                    <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">${d.status === "import" ? "อยู่ในระบบ" : "ถูกนำส่งออก"}</td>
+                                    </td>
+                                </tr>`
+                }
+            })
+            mytbody2.innerHTML = tbody
+        }
+        function formatDate(mil) {
+            const date = new Date(mil);
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // add 1 to adjust for zero-based month indexing and pad with zeros
+            const day = date.getDate().toString().padStart(2, '0'); // pad with zeros
+
+            const formattedDate = `${year}-${month}-${day}`; // using string literals
+
+            // Alternatively, using the join() method:
+            // const formattedDate = [year, month, day].join('-');
+
+            console.log(formattedDate); // Output: "2023-04-04"
+            return formattedDate
+        }
+        async function requests_book() {
+            try {
+                let headersList = {
+                    "Accept": "*/*",
+                    "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+                    "Content-Type": "application/json"
+                }
+
+                let bodyContent = JSON.stringify({
+                    "token": localStorage.getItem("token"),
+                    "arr": select_array
+                });
+
+                let response = await fetch(localStorage.getItem("url_endpoint") + "/api/book/requsets", {
+                    method: "POST",
+                    body: bodyContent,
+                    headers: headersList
+                });
+
+                let data = await response.json();
+                console.log(data);
+                select_array = []
+                let msg = data.message
+                if (msg === "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'หนังสือ',
+                        text: 'ร้องขอหนังสือสำเร็จ รอ admin อนุมัติ',
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                }
+            } catch (err) {
+                console.log(err)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                })
+            }
+
+        }
+        async function confirm_book() {
+            Swal.fire({
+                title: 'ยืนยันการขอรับหนังสือ',
+                text: "ตรวจสอบให้แน่ใจว่าได้หนังสือครบถ้วน ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'green',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ยืนยันการขอหนังสือ'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    requests_book()
+                    // Swal.fire(
+                    //     'บันทึกข้อมูลสำเร็จ!',
+                    // )
+                }
+            })
+        }
+    </script>
     <!-- Donate End -->
 
 
