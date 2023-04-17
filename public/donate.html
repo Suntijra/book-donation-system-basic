@@ -121,7 +121,25 @@
             <div class="row g-5 align-items-center">
                 <div class="wow fadeIn" data-wow-delay="0.1s">
                     <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Donate Now</div>
-                    <h1 class="display-6 mb-5">รายการหนังสือ</h1>
+                    <div style="position: relative;">
+                        <div id="carts" style="background-color:#fff;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border:1px solid red;
+                        background-color: red;  
+                        height:20px;
+                        border-radius:50%;
+                        -moz-border-radius:50%;
+                        -webkit-border-radius:50%;
+                        width:20px; font-size: 12px; font-weight: 100; color: #fff;
+                        position: absolute;top: 10%;left: 24%;">0</div>
+                    </div>
+                    <h1 style class="display-6 mb-5">รายการหนังสือ
+                        <img style="height: 25px;"
+                            src="https://cdn.discordapp.com/attachments/1036985504996016128/1097517913637929092/book-stack.png">
+                    </h1>
+
                     <p class="mb-0">
                     <div class="table-container">
                         <table class="table">
@@ -293,6 +311,7 @@
                 }
             })
             mytbody2.innerHTML = tbody
+            carts.innerHTML = select_array.length
         }
         function formatDate(mil) {
             const date = new Date(mil);
