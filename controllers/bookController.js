@@ -11,6 +11,7 @@ function jwt_generate_token(data) {
     return jwt.sign(data, secret_key);
 }
 const nodemailer = require("nodemailer");
+const { count_book } = require('../models/bookModel');
 let transporter = nodemailer.createTransport({
     host: 'gmail',
     service: 'Gmail',
@@ -143,5 +144,21 @@ module.exports = {
             console.log(error)
             res.status(500).json({ message: 'Internal server error' });
         }
+    },
+    count_book : async (req,res) =>{
+        try {
+            const [rows,fields] = await bookModel.count_book()
+            const [rows2,fields2] = await bookModel.count_book2()
+
+            let book = rows[0].count
+            let journal = rows[1].count
+            let export1 = rows2[0].c
+            let import1 = rows2[1].c
+            // SELECT SUM(journal_num) ,SUM(book_num) FROM import_time;
+            res.status(200).json({ message: 'success' ,book,journal,export1,import1});
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ message: 'Internal server error' });
+        } 
     }
 }

@@ -50,5 +50,16 @@ module.exports = {
     WHERE id = ?;`, [uget, id]);
     return [rows, fields];
 
+  },
+  count_book : async() =>{
+    const [rows , fields] = await db.execute(`select type,COUNT(*) as count 
+    FROM book
+    GROUP by type;`)
+    return [rows, fields];
+  },
+  count_book2 : async()=>{
+    const [rows, fields] = await db.execute(`SELECT status, COUNT(*) as c FROM book
+    GROUP by status;`)
+    return [rows, fields];
   }
 };

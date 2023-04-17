@@ -16,5 +16,6 @@ router.get("/findall/book",book_controller.findAllBook)
 router.post("/approved",auth,book_controller.approved)
 router.post("/update/status",book_controller.updateStatus)
 router.post("/requsets",book_controller.requestbook)
+router.post("/count",auth,book_controller.count_book)
 
 module.exports = router;

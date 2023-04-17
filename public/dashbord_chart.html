@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>chart</title>
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- CUSTOM STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <!-- GOOGLE FONTS-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <style>
+        .mytable {
+            border-collapse: collapse;
+            margin: 0 auto;
+            font-size: 14px;
+            color: #444444;
+        }
+
+        .myth,
+        .mytd {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+            /* vertical-align: middle; */
+        }
+
+        .myth {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            color: #222222;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mytr:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="adjust-nav">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <img src="assets/img/logo.png" />
+                    </a>
+                </div>
+
+                <span class="logout-spn">
+                    <a onclick="logout()" style="color:#fff;">LOGOUT</a>
+
+                </span>
+            </div>
+        </div>
+        <!-- /. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <a href="./dashbord_chart.html">
+                            <i class="fa fa-desktop ">
+
+                            </i> Dashboard<span class="badge"></span></a>
+                    </li>
+                    <li>
+                        <a href="./dashbord.html"><i class="fa fa-table "></i>รายการรอนุมัติ</a>
+                    </li>
+                    <li>
+                        <a href="./dashbord_save.html"><i class="fa fa-table "></i>บันทึกข้อมูลหนังสือ</a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>chart data </h2>
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+                <hr />
+                <div style="width: 100%;
+                display: flex;
+                justify-content: center;
+                height: 70vh;
+                flex-direction: column;
+                align-items: center;">
+
+                    <canvas id="pieChart"></canvas>
+                    
+                </div>
+                <div style="display: flex; justify-content: center; flex-direction: column;">
+                    <span>หนังสือทั้งหมด : <span id="all">1</span></span>
+                    <span>หนังสือรับเข้า : <span id="b1">1</span></span>
+                    <span>หนังสือรับออก : <span id="b2">1</span></span>
+                    <span>หนังสือวรสาร : <span id="b3">1</span></span>
+                    <span>หนังสือทั่วไป : <span id="b4">1</span></span>
+
+                </div>
+
+
+                <!-- /. ROW  -->
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <div class="footer">
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                &copy; 2014 yourdomain.com | Design by: <a href="http://binarytheme.com" style="color:#fff;"
+                    target="_blank">www.binarytheme.com</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-1.10.2.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script src="assets/js/custom.js"></script>
+
+    <script src="./js/auth_admin.js"></script>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+    function formatDate(mil) {
+        const date = new Date(mil);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // add 1 to adjust for zero-based month indexing and pad with zeros
+        const day = date.getDate().toString().padStart(2, '0'); // pad with zeros
+
+        const formattedDate = `${year}-${month}-${day}`; // using string literals
+
+        // Alternatively, using the join() method:
+        // const formattedDate = [year, month, day].join('-');
+
+        console.log(formattedDate); // Output: "2023-04-04"
+        return formattedDate
+    }
+    function logout() {
+        localStorage.setItem("token", '')
+        window.location.reload()
+    }
+    let global_data = []
+    async function getinfo_data() {
+        let headersList = {
+            "Accept": "*/*",
+            "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+            "Content-Type": "application/json"
+        }
+
+        let bodyContent = JSON.stringify({
+            "token": localStorage.getItem('token')
+        });
+
+        let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/count", {
+            method: "POST",
+            body: bodyContent,
+            headers: headersList
+        });
+
+        let data = await response.json();
+        console.log(data);
+        global_data.push(data.import1)
+        global_data.push(data.export1)
+        global_data.push(data.journal + data.book)
+        global_data.push(data.journal)
+        global_data.push(data.book)
+        all.innerText = data.journal + data.book
+        b1.innerText = data.import1
+        b2.innerText = data.export1
+        b3.innerText = data.journal
+        b4.innerText = data.book
+        // global_data.book_count = data.book
+        // global_data.journal_count = data.journal
+        // global_data.book_sum = data.journal + data.book
+        // global_data.export = data.export1
+        // global_data.import = data.import1
+
+    }
+    getinfo_data()
+    // Data
+    var data = {
+        labels: ["หนังสือรับเข้า", "หนังสือรับออก", "หนังสือทั้งหมด", "วรสาร" ,"หนังสือ"],
+        datasets: [{
+            data: global_data, // You can adjust the values here to reflect your actual data
+            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56","#6f7952","#e05ac5"], // You can set custom colors for each segment
+        }]
+    };
+
+    // Doughnut Chart
+    var doughnutChart = new Chart(document.getElementById("doughnutChart"), {
+        type: 'doughnut',
+        data: data,
+        options: {
+            title: {
+                display: true,
+                text: 'Doughnut Chart Example'
+            },
+            plugins: {
+                doughnutlabel: {
+                    labels: [{
+                        text: function (context) {
+                            var dataset = context.chart.data.datasets[0];
+                            var value = dataset.data[context.dataIndex];
+                            return value.toString(); // Display count as text
+                        },
+                        font: {
+                            size: '16'
+                        }
+                    }]
+                }
+            }
+        }
+    });
+
+    // Pie Chart
+    var pieChart = new Chart(document.getElementById("pieChart"), {
+        type: 'pie',
+        data: data,
+        options: {
+            title: {
+                display: true,
+                text: 'Pie Chart Example'
+            },
+            plugins: {
+                doughnutlabel: {
+                    labels: [{
+                        text: function (context) {
+                            var dataset = context.chart.data.datasets[0];
+                            var value = dataset.data[context.dataIndex];
+                            return value.toString(); // Display count as text
+                        },
+                        font: {
+                            size: '16'
+                        }
+                    }]
+                }
+            }
+        }
+    });
+
+</script>
