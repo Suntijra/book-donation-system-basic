@@ -6,7 +6,6 @@ var app = express();
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const nodemailer = require("nodemailer");
-// var base64ToS3 = require('nodemailer-base64-to-s3');
 let transporter = nodemailer.createTransport({
     host: 'gmail',
     service: 'Gmail',
@@ -15,7 +14,6 @@ let transporter = nodemailer.createTransport({
         pass: 'Rsu6101187',
     }
 });
-// transporter.use('compile', base64ToS3());
 // const session = require('express-session');
 // import router ;
 let loginSystem = require('./routes/loginRoute')

@@ -10,6 +10,15 @@ function jwt_decoded(token) {
 function jwt_generate_token(data) {
     return jwt.sign(data, secret_key);
 }
+const nodemailer = require("nodemailer");
+let transporter = nodemailer.createTransport({
+    host: 'gmail',
+    service: 'Gmail',
+    auth: {
+        user: 'sunti.po61@rsu.ac.th',
+        pass: 'Rsu6101187',
+    }
+});
 
 module.exports = {
     verifyBook: async (req, res) => {
@@ -53,7 +62,7 @@ module.exports = {
         try {
             const [row2, fields2] = await bookModel.findAllWithInfoEmployee2()
             const [row, fields] = await bookModel.findAllWithInfoEmployee()
-            res.status(200).json({ message: 'success', data: row , user_get :row2});
+            res.status(200).json({ message: 'success', data: row, user_get: row2 });
         } catch (error) {
             console.log(error)
             res.status(500).json({ message: 'Internal server error' });
@@ -61,13 +70,36 @@ module.exports = {
     },
     approved: async (req, res) => {
         try {
-            const { book_name, date_time_in, img, type, token ,email } = req.body
+            const { book_name, date_time_in, img, type, token, email } = req.body
             let approve_id = jwt_decoded(token).id
-            let [uid_rows,uid_fields]  = await usersModel.findIdByEmail(email)
-            console.log(uid_rows)
-            let uid =  uid_rows[0].id
+            let [uid_rows, uid_fields] = await usersModel.findIdByEmail(email)
+            // console.log(uid_rows)
+            transporter.sendMail({
+                from: 'sunti.po61@rsu.ac.th>',   // ผู้ส่ง
+                to: email,// ผู้รับ
+                //  to: "sunti.porkhamchan@gmail.com",// ผู้
+                subject: "Book Donation",                      // หัวข้อ
+                text: "Book Donation",                         // ข้อความ
+                html: `
+                ตามที่ท่านได้กรุณามอบหนังสือและวารสารให้แก่ เว็บไซต์ “ Book donation “
+เพื่อเผยแพร่และให้ประโยชน์ในการนำไปบริจาคต่อ
+       ทางเว็บไซต์ ” Book donation “ ได้รับหนังสือและวารสารดังกล่าวแล้ว ด้วยความขอบคุณยิ่งและจะบริจาคไปยัง สถานที่ขาดแคลนต่อไป 
+ 
+                <br>
+                <br>
+                <br>
+                ขอแสดงความนับถือ 
+                `,                // ข้อความ
+            }, (err, info) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(info.messageId);
+                }
+            });
+            let uid = uid_rows[0].id
             if (approve_id && book_name && date_time_in && img && type) {
-                const [row, fields] = await bookModel.insertBook(approve_id,uid, book_name, date_time_in, img, type)
+                const [row, fields] = await bookModel.insertBook(approve_id, uid, book_name, date_time_in, img, type)
                 console.log(row)
                 res.status(200).json({ message: 'success', data: row });
             } else {
@@ -87,8 +119,8 @@ module.exports = {
                 if (find_id_row[0].date_time_in > date_time_out) {
                     res.status(400).json({ message: 'จำนวนเวลาที่ส่งมาไม่ถูกต้อง' });
                 } else {
-                      const [update_row, update_fields] = await bookModel.updateById(id,date_time_out)
-                      res.status(200).json({ message: 'success', data: update_row });
+                    const [update_row, update_fields] = await bookModel.updateById(id, date_time_out)
+                    res.status(200).json({ message: 'success', data: update_row });
                 }
             } else {
                 res.status(400).json({ message: 'client wrong' });
@@ -99,12 +131,12 @@ module.exports = {
 
         }
     },
-    requestbook : async (req,res) =>{
+    requestbook: async (req, res) => {
         try {
-            const {token ,arr} = req.body
+            const { token, arr } = req.body
             let id = jwt_decoded(token).id
             arr.forEach(async e => {
-                const [update_row, update_fields] = await bookModel.updateUget(id,e)
+                const [update_row, update_fields] = await bookModel.updateUget(id, e)
             });
             res.status(200).json({ message: 'success' });
         } catch (error) {
