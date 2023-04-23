@@ -14,7 +14,9 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet"> 
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -29,11 +31,13 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
     <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-grow text-primary" role="status"></div>
     </div>
     <!-- Spinner End -->
@@ -45,7 +49,8 @@
             <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
                 <h1 class="fw-bold text-primary m-0">Book<span class="text-white">Donation</span></h1>
             </a>
-            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -72,7 +77,7 @@
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="img/2.png" alt="Image" height="855">
+                    <img class="w-100" src="img/3.png" alt="Image" height="855">
                     <div class="carousel-caption">
                     </div>
                 </div>
@@ -88,8 +93,10 @@
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="position-relative overflow-hidden h-100" style="min-height: 400px;">
-                        <img class="position-absolute w-100 h-100 pt-5 pe-5" src="img/5.jpg" alt="" style="object-fit: cover;">
-                        <img class="position-absolute top-0 end-0 bg-white ps-2 pb-2" src="img/1.jpg" alt="" style="width: 230px; height: 190px;">
+                        <img class="position-absolute w-100 h-100 pt-5 pe-5" src="img/5.jpg" alt=""
+                            style="object-fit: cover;">
+                        <img class="position-absolute top-0 end-0 bg-white ps-2 pb-2" src="img/1.jpg" alt=""
+                            style="width: 230px; height: 190px;">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -97,10 +104,13 @@
                         <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">About Us</div>
                         <h1 class="display-6 mb-5">We Help People In Need Around The World</h1>
                         <div class="bg-light border-bottom border-5 border-primary rounded p-4 mb-4">
-                            <p class="text-dark mb-2">Aliqu diam amet diam et eos. Clita erat ipsum et lorem sed stet lorem sit clita duo justo erat amet</p>
+                            <p class="text-dark mb-2">Aliqu diam amet diam et eos. Clita erat ipsum et lorem sed stet
+                                lorem sit clita duo justo erat amet</p>
                             <span class="text-primary">Jhon Doe, Founder</span>
                         </div>
-                        <p class="mb-5">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                        <p class="mb-5">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet
+                            diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna
+                            dolore erat amet</p>
                         <a class="btn btn-primary py-2 px-3 me-3" href="donate.html">
                             ผู้บริจาค
                             <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
@@ -119,8 +129,31 @@
         </div>
     </div>
     <!-- About End -->
-    
+    <div class="row">
+        <div class="col-md-12">
+            <h2>chart data </h2>
+        </div>
+    </div>
+    <!-- /. ROW  -->
+    <hr />
+    <div style="width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 70vh;
+    flex-direction: column;
+    align-items: center;">
 
+        <canvas id="pieChart"></canvas>
+
+    </div>
+    <div style="display: flex; justify-content: center; flex-direction: column;">
+        <span>หนังสือทั้งหมด : <span id="all">1</span></span>
+        <span>หนังสือรับเข้า : <span id="b1">1</span></span>
+        <span>หนังสือรับออก : <span id="b2">1</span></span>
+        <span>หนังสือวรสาร : <span id="b3">1</span></span>
+        <span>หนังสือทั่วไป : <span id="b4">1</span></span>
+
+    </div>
     <!-- Testimonial Start -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -129,15 +162,35 @@
                 <h1 class="display-6 mb-5">Trusted By Thousands Of People And Nonprofits</h1>
             </div>
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                <div class="testimonial-item text-center">
-                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-1.jpg" style="width: 100px; height: 100px;">
-                    <div class="testimonial-text rounded text-center p-4">
-                        <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
+
+                <div class="testimonial-item text-center"
+                    style="background: url('/img/4.png');height: 300px;background-size: contain; background-repeat: no-repeat;">
+                    <!-- <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/4.png" style="width: 100px; height: 100px;"> -->
+                    <!-- <div class="testimonial-text rounded text-center p-4"> -->
+                    <!-- <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
                         <h5 class="mb-1">Doner Name</h5>
-                        <span class="fst-italic">Profession</span>
-                    </div>
+                        <span class="fst-italic">Profession</span> -->
+                    <!-- </div> -->
                 </div>
-                <div class="testimonial-item text-center">
+                <div class="testimonial-item text-center"
+                    style="background: url('/img/5.png');height: 300px;background-size: contain; background-repeat: no-repeat;">
+                    <!-- <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/4.png" style="width: 100px; height: 100px;"> -->
+                    <!-- <div class="testimonial-text rounded text-center p-4"> -->
+                    <!-- <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
+                        <h5 class="mb-1">Doner Name</h5>
+                        <span class="fst-italic">Profession</span> -->
+                    <!-- </div> -->
+                </div>
+                <div class="testimonial-item text-center"
+                    style="background: url('/img/6.png');height: 300px;background-size: contain; background-repeat: no-repeat;">
+                    <!-- <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/4.png" style="width: 100px; height: 100px;"> -->
+                    <!-- <div class="testimonial-text rounded text-center p-4"> -->
+                    <!-- <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
+                        <h5 class="mb-1">Doner Name</h5>
+                        <span class="fst-italic">Profession</span> -->
+                    <!-- </div> -->
+                </div>
+                <!-- <div class="testimonial-item text-center">
                     <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-2.jpg" style="width: 100px; height: 100px;">
                     <div class="testimonial-text rounded text-center p-4">
                         <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
@@ -152,7 +205,7 @@
                         <h5 class="mb-1">Doner Name</h5>
                         <span class="fst-italic">Profession</span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -189,9 +242,130 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/parallax/parallax.min.js"></script>
 
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script src="./js/auth.js"></script>
 </body>
 
 </html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function formatDate(mil) {
+        const date = new Date(mil);
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // add 1 to adjust for zero-based month indexing and pad with zeros
+        const day = date.getDate().toString().padStart(2, '0'); // pad with zeros
+
+        const formattedDate = `${year}-${month}-${day}`; // using string literals
+
+        // Alternatively, using the join() method:
+        // const formattedDate = [year, month, day].join('-');
+
+        console.log(formattedDate); // Output: "2023-04-04"
+        return formattedDate
+    }
+    function logout() {
+        localStorage.setItem("token", '')
+        window.location.reload()
+    }
+    let global_data = []
+    async function getinfo_data() {
+        let headersList = {
+            "Accept": "*/*",
+            "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+            "Content-Type": "application/json"
+        }
+
+        let bodyContent = JSON.stringify({
+            "token": localStorage.getItem('token')
+        });
+
+        let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/count", {
+            method: "POST",
+            body: bodyContent,
+            headers: headersList
+        });
+
+        let data = await response.json();
+        console.log(data);
+        global_data.push(data.import1)
+        global_data.push(data.export1)
+        global_data.push(data.journal + data.book)
+        global_data.push(data.journal)
+        global_data.push(data.book)
+        all.innerText = data.journal + data.book
+        b1.innerText = data.import1
+        b2.innerText = data.export1
+        b3.innerText = data.journal
+        b4.innerText = data.book
+        // global_data.book_count = data.book
+        // global_data.journal_count = data.journal
+        // global_data.book_sum = data.journal + data.book
+        // global_data.export = data.export1
+        // global_data.import = data.import1
+
+    }
+    getinfo_data()
+    // Data
+    var data = {
+        labels: ["หนังสือรับเข้า", "หนังสือรับออก", "หนังสือทั้งหมด", "วรสาร", "หนังสือ"],
+        datasets: [{
+            data: global_data, // You can adjust the values here to reflect your actual data
+            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#6f7952", "#e05ac5"], // You can set custom colors for each segment
+        }]
+    };
+
+    // Doughnut Chart
+    var doughnutChart = new Chart(document.getElementById("doughnutChart"), {
+        type: 'doughnut',
+        data: data,
+        options: {
+            title: {
+                display: true,
+                text: 'Doughnut Chart Example'
+            },
+            plugins: {
+                doughnutlabel: {
+                    labels: [{
+                        text: function (context) {
+                            var dataset = context.chart.data.datasets[0];
+                            var value = dataset.data[context.dataIndex];
+                            return value.toString(); // Display count as text
+                        },
+                        font: {
+                            size: '16'
+                        }
+                    }]
+                }
+            }
+        }
+    });
+
+    // Pie Chart
+    var pieChart = new Chart(document.getElementById("pieChart"), {
+        type: 'pie',
+        data: data,
+        options: {
+            title: {
+                display: true,
+                text: 'Pie Chart Example'
+            },
+            plugins: {
+                doughnutlabel: {
+                    labels: [{
+                        text: function (context) {
+                            var dataset = context.chart.data.datasets[0];
+                            var value = dataset.data[context.dataIndex];
+                            return value.toString(); // Display count as text
+                        },
+                        font: {
+                            size: '16'
+                        }
+                    }]
+                }
+            }
+        }
+    });
+
+</script>

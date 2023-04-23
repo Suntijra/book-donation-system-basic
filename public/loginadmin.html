@@ -50,10 +50,21 @@
                 transform: rotate(360deg);
             }
         }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url("./img/2.png");
+            background-repeat: no-repeat;
+            /* object-fit: cover; */
+            background-size: cover;
+        }
     </style>
 </head>
 
-<body style="display: flex; justify-content: center; align-items: center; height: 100vh;background-color: coral;">
+<body style="">
     <!-- loading -->
     <div class="loading-container">
         <div class="loading-animation"></div>
@@ -106,8 +117,8 @@
                 let msg = data.message
                 let token = data.token
                 if (msg === "success") {
-                    localStorage.setItem("token",token)
-                    localStorage.setItem("role","admin")
+                    localStorage.setItem("token", token)
+                    localStorage.setItem("role", "admin")
                     window.location.href = "./dashbord.html"
                 } else {
                     Swal.fire({
