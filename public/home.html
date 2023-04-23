@@ -55,16 +55,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="home.html" class="nav-item nav-link active">Home</a>
+                    <a href="home.html" class="nav-item nav-link active">หน้าแรก</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">หน้า</a>
                         <div class="dropdown-menu m-0">
-                            <a href="donate.html" class="dropdown-item">ติดต่อเพื่อบริจาค/ขอรับบริจาค</a>
+                            <a href="donate.html" class="dropdown-item">หนังสือ</a>
                             <!-- <a href="percent.html" class="dropdown-item">สถิติ</a> -->
                             <a href="donation.html" class="dropdown-item">บริจาค</a>
                         </div>
                     </div>
-                    <a href="login.html" class="nav-item nav-link">Log out</a>
+                    <a href="login.html" class="nav-item nav-link">ออกจากระบบ</a>
                 </div>
             </div>
         </nav>
@@ -213,7 +213,7 @@
 
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-white-50 footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid text-black-50 footer mt-5 pt-5 wow fadeIn" style="background: #fdf8f0;" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row">
                 <div class="col-md-4">
@@ -304,68 +304,72 @@
         // global_data.book_sum = data.journal + data.book
         // global_data.export = data.export1
         // global_data.import = data.import1
+        reder_chart()
 
     }
     getinfo_data()
     // Data
-    var data = {
-        labels: ["หนังสือรับเข้า", "หนังสือรับออก", "หนังสือทั้งหมด", "วรสาร", "หนังสือ"],
-        datasets: [{
-            data: global_data, // You can adjust the values here to reflect your actual data
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#6f7952", "#e05ac5"], // You can set custom colors for each segment
-        }]
-    };
+    function reder_chart() {
+        var data = {
+            labels: ["หนังสือรับเข้า", "หนังสือรับออก", "หนังสือทั้งหมด", "วรสาร", "หนังสือ"],
+            datasets: [{
+                data: global_data, // You can adjust the values here to reflect your actual data
+                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#6f7952", "#e05ac5"], // You can set custom colors for each segment
+            }]
+        };
 
-    // Doughnut Chart
-    var doughnutChart = new Chart(document.getElementById("doughnutChart"), {
-        type: 'doughnut',
-        data: data,
-        options: {
-            title: {
-                display: true,
-                text: 'Doughnut Chart Example'
-            },
-            plugins: {
-                doughnutlabel: {
-                    labels: [{
-                        text: function (context) {
-                            var dataset = context.chart.data.datasets[0];
-                            var value = dataset.data[context.dataIndex];
-                            return value.toString(); // Display count as text
-                        },
-                        font: {
-                            size: '16'
-                        }
-                    }]
+        // Doughnut Chart
+        var doughnutChart = new Chart(document.getElementById("doughnutChart"), {
+            type: 'doughnut',
+            data: data,
+            options: {
+                title: {
+                    display: true,
+                    text: 'Doughnut Chart Example'
+                },
+                plugins: {
+                    doughnutlabel: {
+                        labels: [{
+                            text: function (context) {
+                                var dataset = context.chart.data.datasets[0];
+                                var value = dataset.data[context.dataIndex];
+                                return value.toString(); // Display count as text
+                            },
+                            font: {
+                                size: '16'
+                            }
+                        }]
+                    }
                 }
             }
-        }
-    });
+        });
 
-    // Pie Chart
-    var pieChart = new Chart(document.getElementById("pieChart"), {
-        type: 'pie',
-        data: data,
-        options: {
-            title: {
-                display: true,
-                text: 'Pie Chart Example'
-            },
-            plugins: {
-                doughnutlabel: {
-                    labels: [{
-                        text: function (context) {
-                            var dataset = context.chart.data.datasets[0];
-                            var value = dataset.data[context.dataIndex];
-                            return value.toString(); // Display count as text
-                        },
-                        font: {
-                            size: '16'
-                        }
-                    }]
+        // Pie Chart
+        var pieChart = new Chart(document.getElementById("pieChart"), {
+            type: 'pie',
+            data: data,
+            options: {
+                title: {
+                    display: true,
+                    text: 'Pie Chart Example'
+                },
+                plugins: {
+                    doughnutlabel: {
+                        labels: [{
+                            text: function (context) {
+                                var dataset = context.chart.data.datasets[0];
+                                var value = dataset.data[context.dataIndex];
+                                return value.toString(); // Display count as text
+                            },
+                            font: {
+                                size: '16'
+                            }
+                        }]
+                    }
                 }
             }
-        }
-    });
+        });
+    }
+
 
 </script>
