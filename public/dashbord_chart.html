@@ -187,28 +187,25 @@
             headers: headersList
         });
 
-        let data = await response.json();
+        let data2 = await response.json();
         console.log(data);
-        global_data.push(data.import1)
-        global_data.push(data.export1)
-        global_data.push(data.journal + data.book)
-        global_data.push(data.journal)
-        global_data.push(data.book)
-        all.innerText = data.journal + data.book
-        b1.innerText = data.import1
-        b2.innerText = data.export1
-        b3.innerText = data.journal
-        b4.innerText = data.book
+        global_data.push(data2.import1)
+        global_data.push(data2.export1)
+        global_data.push(data2.journal + data2.book)
+        global_data.push(data2.journal)
+        global_data.push(data2.book)
+        all.innerText = data2.journal + data2.book
+        b1.innerText = data2.import1
+        b2.innerText = data2.export1
+        b3.innerText = data2.journal
+        b4.innerText = data2.book
         // global_data.book_count = data.book
         // global_data.journal_count = data.journal
         // global_data.book_sum = data.journal + data.book
-        // global_data.export = data.export1
+        // global_data.ex2port = data.export1
         // global_data.import = data.import1
-
-    }
-    getinfo_data()
-    // Data
-    var data = {
+// Data
+var data = {
         labels: ["หนังสือรับเข้า", "หนังสือรับออก", "หนังสือทั้งหมด", "วรสาร" ,"หนังสือ"],
         datasets: [{
             data: global_data, // You can adjust the values here to reflect your actual data
@@ -267,5 +264,8 @@
             }
         }
     });
+    }
+    getinfo_data()
+    
 
 </script>
