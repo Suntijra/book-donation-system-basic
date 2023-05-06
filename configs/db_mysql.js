@@ -4,7 +4,7 @@
 const pool = {
     host: '127.0.0.1',
     user: 'root',
-    password: 'root',
+    //password: 'root',
     database: 'book_donation_center'
 }
 
