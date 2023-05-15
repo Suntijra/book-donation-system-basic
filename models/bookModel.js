@@ -35,9 +35,9 @@ module.exports = {
     return [rows, fields];
   },
 
-  insertBook: async (approve_id, uid, book_name, date_time_in, img, type) => {
-    const [rows, fields] = await db.execute(`insert into book (approve_id,uid,book_name,date_time_in,img,type)
-    VALUES (?, ?, ?, ?,?,?);`, [approve_id, uid, book_name, date_time_in, img, type]);
+  insertBook: async (approve_id, uid, book_name, date_time_in, img, type,count) => {
+    const [rows, fields] = await db.execute(`insert into book (approve_id,uid,book_name,date_time_in,img,type,book_count)
+    VALUES (?, ?, ?, ?,?,?,?);`, [approve_id, uid, book_name, date_time_in, img, type,count]);
     return [rows, fields];
   },
   updateById: async (id, date_time_out) => {

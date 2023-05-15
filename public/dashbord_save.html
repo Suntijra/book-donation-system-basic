@@ -254,6 +254,8 @@
                         <input id="book_name" style="margin-top: 5px;" type="text" name="book_name">
                         <label for="person1">อีเมล: คนบริจาค</label>
                         <input id="person1" style="margin-top: 5px;" type="text" name="person1">
+                        <label for="book_count">จำนวนหนังสือ</label>
+                        <input id="book_count" style="margin-top: 5px;" type="number" name="book_count">
                         <label style="margin-top: 5px;" for="type">ประเภทหนังสือ</label>
                         <select style="margin-top: 5px;" name="type" id="book_type">
                             <option value="">กรุณาเลือกประเภทหนังสือ</option>
@@ -428,9 +430,6 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 approve_submit()
-                // Swal.fire(
-                //     'บันทึกข้อมูลสำเร็จ!',
-                // )
             }
         })
     }
@@ -448,7 +447,8 @@
                 "date_time_in": new Date(date_in.value).getTime(),
                 "img": IMG_FILE_FOR_SEND_TO_DB,
                 "type": book_type.value,
-                "email": person1.value
+                "email": person1.value,
+                "count" : parseInt(book_count.value)
             });
 
             let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/approved", {

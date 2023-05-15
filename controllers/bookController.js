@@ -71,7 +71,7 @@ module.exports = {
     },
     approved: async (req, res) => {
         try {
-            const { book_name, date_time_in, img, type, token, email } = req.body
+            const { book_name, date_time_in, img, type, token, email,count } = req.body
             let approve_id = jwt_decoded(token).id
             let [uid_rows, uid_fields] = await usersModel.findIdByEmail(email)
             // console.log(uid_rows)
@@ -100,7 +100,7 @@ module.exports = {
             });
             let uid = uid_rows[0].id
             if (approve_id && book_name && date_time_in && img && type) {
-                const [row, fields] = await bookModel.insertBook(approve_id, uid, book_name, date_time_in, img, type)
+                const [row, fields] = await bookModel.insertBook(approve_id, uid, book_name, date_time_in, img, type,count)
                 console.log(row)
                 res.status(200).json({ message: 'success', data: row });
             } else {
