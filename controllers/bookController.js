@@ -69,6 +69,15 @@ module.exports = {
             res.status(500).json({ message: 'Internal server error' });
         }
     },
+    findBookHistory: async (req, res) => {
+        try {
+            const [row, fields] = await bookModel.findBookHistory()
+            res.status(200).json({ message: 'success', data: row});
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    },
     approved: async (req, res) => {
         try {
             const { book_name, date_time_in, img, type, token, email,count } = req.body
@@ -134,10 +143,13 @@ module.exports = {
     },
     requestbook: async (req, res) => {
         try {
-            const { token, arr } = req.body
+            const { token, arr ,book_arr } = req.body
             let id = jwt_decoded(token).id
-            arr.forEach(async e => {
+            arr.forEach(async ( e , index ) => {
+                let b_num = book_arr[index]
+                console.log(b_num)
                 const [update_row, update_fields] = await bookModel.updateUget(id, e)
+                await bookModel.insert_request_book(e,id,b_num)
             });
             res.status(200).json({ message: 'success' });
         } catch (error) {

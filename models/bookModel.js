@@ -30,14 +30,20 @@ module.exports = {
     left join user as u2 on u2.id = b.ugetbook`);
     return [rows, fields];
   },
+  findBookHistory: async () => {
+    const [rows, fields] = await db.execute(`
+    SELECT bh.id as bhbh_id ,bh.*,b.*,b.book_count - bh.pre_book_count as remain_book FROM book_history as bh LEFT JOIN book as b on b.id = bh.bh_id;
+`);
+    return [rows, fields];
+  },
   findAllById: async (id) => {
     const [rows, fields] = await db.execute('SELECT * FROM book where id = ?', [id]);
     return [rows, fields];
   },
 
-  insertBook: async (approve_id, uid, book_name, date_time_in, img, type,count) => {
+  insertBook: async (approve_id, uid, book_name, date_time_in, img, type, count) => {
     const [rows, fields] = await db.execute(`insert into book (approve_id,uid,book_name,date_time_in,img,type,book_count)
-    VALUES (?, ?, ?, ?,?,?,?);`, [approve_id, uid, book_name, date_time_in, img, type,count]);
+    VALUES (?, ?, ?, ?,?,?,?);`, [approve_id, uid, book_name, date_time_in, img, type, count]);
     return [rows, fields];
   },
   updateById: async (id, date_time_out) => {
@@ -46,18 +52,26 @@ module.exports = {
 
   },
   updateUget: async (uget, id) => {
-    const [rows, fields] = await db.execute(` UPDATE book SET ugetbook = ?
+    // console.log('num_book',num_book)
+    const [rows, fields] = await db.execute(` UPDATE book SET ugetbook = ? 
     WHERE id = ?;`, [uget, id]);
     return [rows, fields];
 
   },
-  count_book : async() =>{
-    const [rows , fields] = await db.execute(`select type,COUNT(*) as count 
+  insert_request_book: async (bh_id, uid_get, pre_book_count) => {
+    // console.log('num_book',num_book)
+    const [rows, fields] = await db.execute(`INSERT INTO book_history (bh_id, uid_get, pre_book_count)
+    VALUES (?,?,?);`, [bh_id, uid_get, pre_book_count]);
+    return [rows, fields];
+
+  },
+  count_book: async () => {
+    const [rows, fields] = await db.execute(`select type,COUNT(*) as count 
     FROM book
     GROUP by type;`)
     return [rows, fields];
   },
-  count_book2 : async()=>{
+  count_book2: async () => {
     const [rows, fields] = await db.execute(`SELECT status, COUNT(*) as c FROM book
     GROUP by status;`)
     return [rows, fields];

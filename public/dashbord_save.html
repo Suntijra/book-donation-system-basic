@@ -328,6 +328,7 @@
                                     <th class="myth">ผู้มารับหนังสือบริจาค</th>
                                     <th class="myth">สถานะการร้องขอหนังสือ</th>
                                     <th class="myth">สถานะ</th>
+                                    <th class="myth">จำนวนหนังสือ</th>
                                     <th class="myth"></th>
                                 </tr>
                             </thead>
@@ -337,7 +338,7 @@
                         </table>
                     </div>
                                 </div>`
-
+                            //    array =  array.filter(d => d.num_getbook > 0)
                             array.forEach((d, index) => {
                                 // console.log(d)
                                 let uget = user_get[index]
@@ -361,6 +362,7 @@
                                     <td class="mytd">${uget.ugetbook !== 0 ? uget.email : "-"}</td>
                                     <th class="mytd"style="color : ${request_color} " >${request_text}</th>
                                     <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">${d.status === "import"  ? "อยู่ในระบบ" : "ถูกนำส่งออก"}</td>
+                                    <td class="mytd">${d.num_getbook}</td>
                                     ${d.status === "import" ? ` <td class="mytd"><button onclick="openModal(${d.id},'${uget.email}','${d.img}');">ยืนยันมีผู้มารับหนังสือแล้ว</button>` : ` <td class="mytd">`}
                                     </td>
                                 </tr>`

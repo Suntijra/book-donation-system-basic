@@ -8,7 +8,8 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+    <!-- tailwind css -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Favicon -->
     <link href="img/icon-1.png" rel="icon">
 
@@ -154,6 +155,7 @@
                                     <th>ผู้มารับหนังสือบริจาค</th>
                                     <th>สถานะการร้องขอหนังสือ</th>
                                     <th>สถานะ</th>
+                                    <th>จำนวนหนังสือ</th>
                                 </tr>
                             </thead>
                             <tbody id="mytbody">
@@ -198,6 +200,7 @@
                                         <th>ผู้มารับหนังสือบริจาค</th>
                                         <th>สถานะการร้องขอหนังสือ</th>
                                         <th>สถานะ</th>
+                                        <th>จำนวนหนังสือ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="mytbody2">
@@ -211,12 +214,47 @@
                 </div>
             </div>
             <div class="text-center">
-                <button onclick="confirm_book()">ตกลง</button>
+                <button onclick="confirm_book()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded px-4 py-1" >ตกลง</button>
             </div>
         </div>
     </div>
+    <!-- ส่วนตัวอย่าง HTML -->
+    <div id="b_count" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-bold mb-4">กรอกจำนวนหนังสือ</h2>
+            <input type="number" id="b_num" class="w-full border border-gray-300 rounded-lg p-2 mb-4"
+                placeholder="จำนวนหนังสือ" />
+            <div class="flex justify-end">
+                <button onclick="hide_html_id('b_count')"
+                    class="bg-gray-500 text-white px-4 py-2 rounded-lg mr-2">ยกเลิก</button>
+                <button onclick="confirm_b_click()" class="bg-blue-500 text-white px-4 py-2 rounded-lg">ตกลง</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        function hide_html_id(id) {
+            document.getElementById(id).classList.add('hidden')
+        }
+        function open_html_id(id, b_id, remain_num) {
+            document.getElementById(id).classList.remove('hidden')
+            b_id_g = b_id
+            remain_num_g = remain_num
+        }
+        let b_id_g = 0
+        let remain_num_g = 0
+        let b_num = 0
+        function confirm_b_click() {
+            b_num = parseInt(document.getElementById('b_num').value)
+            remain_num = parseInt(remain_num_g)
+            if (remain_num_g >= b_num && remain_num_g > 0) {
+                select_table(b_id_g)
+            } else {
+                alert('จำนวนหนังสือไม่ถูกต้อง')
+            }
+
+        }
         render_book()
         async function render_book() {
             let headersList = {
@@ -224,7 +262,7 @@
                 "User-Agent": "Thunder Client (https://www.thunderclient.com)"
             }
 
-            let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/findall/book", {
+            let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/findall/book_history", {
                 method: "GET",
                 headers: headersList
             });
@@ -257,31 +295,40 @@
                                     <td class="mytd">${d.date_time_out ? formatDate(d.date_time_out) : "-"}</td>
                                     <td class="mytd">${d.fname}</td>
                                     <td class="mytd">${uget.ugetbook !== 0 ? uget.email : "-"}</td>
-                                    <td class="mytd" style="color:${request_color}">${request_text}</td>
-                                    <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">${d.status === "import" ? "อยู่ในระบบ" : "ถูกนำส่งออก"}</td>
-                                    ${d.status === "import" && request_text === 'ยังไม่มีการร้องขอ' ? ` <td class="mytd"><button onclick='select_table(${d.id})'>เลือกรายการหนังสือ</button>` : ` <td class="mytd">`}
+                                    <td class="mytd" style="color:${request_color}">-</td>
+                                    <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">-</td>
+                                      <td class="mytd">${d.book_count}</td>
+                                    ${d.book_count > 0  ? `<td class="mytd"><button onclick="open_html_id('b_count',${d.id},${d.book_count})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded">เลือกรายการหนังสือ</button></td>` : ` <td class="mytd">`}
                                     </td>
                                 </tr>`
             })
             mytbody.innerHTML = tbody
         }
         let select_array = []
+        let book_array = []
         async function select_table(id) {
+            hide_html_id('b_count')
             !select_array.includes(id) && select_array.push(id)
+            // !select_array.includes(id) && book_array.push(b_num)
+            id = parseInt(id)
+            let index = select_array.indexOf(id)
+            book_array[index] = parseInt(b_num)
+            // console.log('book_array',book_array)
             let headersList = {
                 "Accept": "*/*",
                 "User-Agent": "Thunder Client (https://www.thunderclient.com)"
             }
 
-            let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/findall/book", {
+            let response = await fetch(localStorage.getItem('url_endpoint') + "/api/book/findall/book_history", {
                 method: "GET",
                 headers: headersList
             });
             let tbody = ``
             let data = await response.json();
-            console.log(data)
+            console.log(data[0])
             let array = data.data
             let user_get = data.user_get
+            let nb_i = 0
             array.forEach((d, index) => {
                 let uget = user_get[index]
                 let request_text = ''
@@ -296,6 +343,7 @@
                     request_color = 'green'
                 }
                 if (select_array.includes(d.id)) {
+                    console.log(book_array, nb_i)
                     tbody += `<tr class="mytr">
                                     <td class="mytd"><img style="width:100px" src="${d.img}" alt=""></td>
                                     <td class="mytd">${d.book_name}</td>
@@ -306,11 +354,14 @@
                                     <td class="mytd">${uget.ugetbook !== 0 ? uget.email : "-"}</td>
                                     <td class="mytd" style="color:${request_color}">${request_text}</td>
                                     <td class="mytd" style="color:${d.status === "import" ? "green" : "red"}">${d.status === "import" ? "อยู่ในระบบ" : "ถูกนำส่งออก"}</td>
+                                    <td class="mytd">${book_array[nb_i]}</td>
                                     </td>
                                 </tr>`
+                    nb_i++
                 }
             })
             mytbody2.innerHTML = tbody
+            console.log('select_array', select_array)
             carts.innerHTML = select_array.length
         }
         function formatDate(mil) {
@@ -337,7 +388,8 @@
 
                 let bodyContent = JSON.stringify({
                     "token": localStorage.getItem("token"),
-                    "arr": select_array
+                    "arr": select_array,
+                    "book_arr" : book_array
                 });
 
                 let response = await fetch(localStorage.getItem("url_endpoint") + "/api/book/requsets", {
@@ -347,8 +399,9 @@
                 });
 
                 let data = await response.json();
-                console.log(data);
+                // console.log(data);
                 select_array = []
+                book_array = []
                 let msg = data.message
                 if (msg === "success") {
                     Swal.fire({
@@ -396,7 +449,8 @@
 
 
     <!-- Footer Start -->
-    <div class="container-fluid text-black-50 footer mt-5 pt-5 wow fadeIn" style="background: #fdf8f0;" data-wow-delay="0.1s">
+    <div class="container-fluid text-black-50 footer mt-5 pt-5 wow fadeIn" style="background: #fdf8f0;"
+        data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row">
                 <div class="col-md-4">
